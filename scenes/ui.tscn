@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/ui.gd" type="Script" id=1]
+
+[node name="ui" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="canvas" type="CanvasLayer" parent="."]
+
+[node name="select_rect" type="ColorRect" parent="canvas"]
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 1, 1, 1, 0.54902 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

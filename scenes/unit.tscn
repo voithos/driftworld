@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/unit.png" type="Texture" id=1]
+[ext_resource path="res://scenes/unit.gd" type="Script" id=2]
+[ext_resource path="res://assets/selection.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="unit" type="KinematicBody2D"]
+input_pickable = true
+script = ExtResource( 2 )
+
+[node name="sprite" type="Sprite" parent="."]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 1 )
+
+[node name="selection" type="Sprite" parent="."]
+scale = Vector2( 0.22, 0.22 )
+texture = ExtResource( 3 )
+
+[node name="shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+[connection signal="input_event" from="." to="." method="_on_unit_input_event"]

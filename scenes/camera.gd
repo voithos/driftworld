@@ -5,6 +5,9 @@ export var zoomspeed = 10
 
 var curzoom = 1.0
 
+func _ready():
+	add_to_group("camera")
+
 func _process(delta):
 	var horizontal = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 	var vertical = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
