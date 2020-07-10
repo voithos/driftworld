@@ -1,12 +1,30 @@
 extends Camera2D
 
-func _ready():
-	pass
+export var speed = 25
+export var zoomspeed = 10
 
-const SPEED = 1000
+var curzoom = 1.0
 
 func _process(delta):
 	var horizontal = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 	var vertical = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
-	position.x += horizontal * delta * SPEED
-	position.y += vertical * delta * SPEED
+	position.x = lerp(position.x, position.x + horizontal * speed, speed * delta)
+	position.y = lerp(position.y, position.y + vertical * speed, speed * delta)
+	
+	zoom.x = lerp(zoom.x, curzoom, zoomspeed * delta)
+	zoom.y = lerp(zoom.y, curzoom, zoomspeed * delta)
+	
+const MIN_ZOOM = 0.5
+const MAX_ZOOM = 2
+const ZOOM_CHANGE = 0.1
+
+func _input(event):
+	
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == BUTTON_WHEEL_UP:
+				if curzoom - ZOOM_CHANGE >= MIN_ZOOM:
+					curzoom -= ZOOM_CHANGE
+			if event.button_index == BUTTON_WHEEL_DOWN:
+				if curzoom + ZOOM_CHANGE <= MAX_ZOOM:
+					curzoom += ZOOM_CHANGE

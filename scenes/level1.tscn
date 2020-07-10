@@ -8,6 +8,5 @@
 polygon = PoolVector2Array( 131, 41, 117, 298, 297, 280, 333, 138 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
 current = true
 script = ExtResource( 1 )
