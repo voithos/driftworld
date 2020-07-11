@@ -3,32 +3,30 @@ extends Node2D
 var start = Vector2()
 var end = Vector2()
 var is_dragging = false
-var mousepos = Vector2()
-var mousestart = Vector2()
-var mouseend = Vector2()
+
+signal selection
 
 var camera
 
 func _ready():
+	add_to_group("ui")
 	yield(get_tree(), "idle_frame")
 	camera = get_tree().get_nodes_in_group("camera")[0]
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_mouse_left"):
 		start = get_global_mouse_position()
-		mousestart = mousepos
 		is_dragging = true
 
 	if is_dragging:
 		end = get_global_mouse_position()
-		mouseend = mousepos
 
 	if Input.is_action_just_released("ui_mouse_left"):
 		end = get_global_mouse_position()
-		mouseend = mousepos
 		is_dragging = false
+		emit_signal("selection", start, end)
 
-	draw_select_rect()		
+	draw_select_rect()
 
 func draw_select_rect():
 	if not is_dragging:
@@ -36,13 +34,9 @@ func draw_select_rect():
 		return
 
 	$canvas/select_rect.visible = true
-	$canvas/select_rect.rect_size = Vector2(abs(start.x-end.x), abs(start.y-end.y))
+	$canvas/select_rect.rect_size = Vector2(abs(start.x-end.x), abs(start.y-end.y)) / camera.zoom
 	
 	var pos = Vector2()
 	pos.x = min(start.x, end.x)
 	pos.y = min(start.y, end.y)
-	$canvas/select_rect.rect_position = pos + get_viewport().size / 2 - camera.position
-
-func _input(event):
-	if event is InputEventMouse:
-		mousepos = event.position
+	$canvas/select_rect.rect_position = (pos / camera.zoom) + get_viewport().size / 2 - (camera.position / camera.zoom)
