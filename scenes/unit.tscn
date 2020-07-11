@@ -1,14 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/unit.png" type="Texture" id=1]
 [ext_resource path="res://scenes/unit.gd" type="Script" id=2]
 [ext_resource path="res://assets/selection.png" type="Texture" id=3]
+[ext_resource path="res://scripts/entity_steering.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 150.0
+
 [node name="unit" type="KinematicBody2D"]
 input_pickable = true
+collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="sprite" type="Sprite" parent="."]
@@ -21,4 +26,14 @@ texture = ExtResource( 3 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="steering" parent="." instance=ExtResource( 4 )]
+
+[node name="detection" type="Area2D" parent="."]
+input_pickable = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="detection_shape" type="CollisionShape2D" parent="detection"]
+shape = SubResource( 2 )
 [connection signal="input_event" from="." to="." method="_on_unit_input_event"]

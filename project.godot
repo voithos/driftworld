@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Screen="*res://scripts/screen.gd"
+Steering="*res://scripts/steering.gd"
 
 [display]
 

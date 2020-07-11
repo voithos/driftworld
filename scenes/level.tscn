@@ -10,4 +10,5 @@ script = ExtResource( 4 )
 [node name="camera" parent="." instance=ExtResource( 3 )]
 
 [node name="ui" parent="." instance=ExtResource( 2 )]
+[connection signal="right_click" from="ui" to="." method="_on_ui_right_click"]
 [connection signal="selection" from="ui" to="." method="_on_ui_selection"]

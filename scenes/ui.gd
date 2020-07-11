@@ -5,6 +5,7 @@ var end = Vector2()
 var is_dragging = false
 
 signal selection
+signal right_click
 
 var camera
 
@@ -25,6 +26,9 @@ func _process(delta):
 		end = get_global_mouse_position()
 		is_dragging = false
 		emit_signal("selection", start, end)
+		
+	if not is_dragging and Input.is_action_just_pressed("ui_mouse_right"):
+		emit_signal("right_click", get_global_mouse_position())
 
 	draw_select_rect()
 
@@ -39,4 +43,4 @@ func draw_select_rect():
 	var pos = Vector2()
 	pos.x = min(start.x, end.x)
 	pos.y = min(start.y, end.y)
-	$canvas/select_rect.rect_position = (pos / camera.zoom) + get_viewport().size / 2 - (camera.position / camera.zoom)
+	$canvas/select_rect.rect_position = (pos / camera.zoom) + get_viewport().size / 2 - (camera.global_position / camera.zoom)

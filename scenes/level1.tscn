@@ -11,6 +11,11 @@
 position = Vector2( -387.104, -141.493 )
 polygon = PoolVector2Array( 131, 41, 117, 298, 297, 280, 333, 138 )
 
+[node name="StaticBody2D" type="StaticBody2D" parent="level/Polygon2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="level/Polygon2D/StaticBody2D"]
+polygon = PoolVector2Array( 130.684, 40.2657, 114.263, 300.894, 305.496, 276.526, 334.631, 129.261, 131.214, 44.5035 )
+
 [node name="unit" parent="level" instance=ExtResource( 2 )]
 unit_base_color = Color( 0.0705882, 0.745098, 0.745098, 1 )
 
