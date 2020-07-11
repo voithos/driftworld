@@ -47,3 +47,7 @@ unit_type = 1
 [node name="base" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 34.1565, 259.526 )
 unit_type = 0
+
+[node name="base2" parent="level" instance=ExtResource( 3 )]
+position = Vector2( 175.578, -441.924 )
+unit_type = 1

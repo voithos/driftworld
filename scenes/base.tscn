@@ -7,6 +7,7 @@
 radius = 110.0
 
 [node name="base" type="StaticBody2D"]
+collision_layer = 3
 script = ExtResource( 2 )
 
 [node name="sprite" type="Sprite" parent="."]

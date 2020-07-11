@@ -1,9 +1,7 @@
 # TODOs
 
 Basics:
-- Attacking bases
 - Base capture
-- Collision avoidance
 - Eradication / game over / level won
 - Max units (based on # of total bases, I guess)
 - Enemy AI!!!
@@ -28,6 +26,8 @@ Polish:
 - Background music
 - Camera edge scrolling
 - Title screen
+- Have laser ray-cast to the surface of the bases
+- Collision avoidance
 
 Extras:
 - Towers
@@ -52,3 +52,4 @@ Extras:
 - Neutral bases
   - Neutral units? Nah
 - Attack laser
+- Attacking bases

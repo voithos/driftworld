@@ -4,6 +4,9 @@ const colors = preload("res://scripts/colors.gd")
 
 export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 
+export (int) var starting_hp = 100
+var hp = starting_hp
+
 export (float) var SPAWN_SECS = 2.0
 export (float) var SPAWN_RING_WIDTH = 75.0
 
@@ -37,3 +40,12 @@ func generate_spawn_position():
 	var direction = Vector2(cos(angle), sin(angle))
 	var ring_offset = randf() * SPAWN_RING_WIDTH
 	return global_position + direction * (spawn_radius + ring_offset)
+
+
+func take_damage(damage):
+	hp -= damage
+	if hp <= 0:
+		die()
+
+func die():
+	queue_free()
