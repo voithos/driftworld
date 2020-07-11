@@ -161,7 +161,7 @@ func attack_enemies(other_units):
 	var closest = null
 	var closest_dist = null
 	for unit in other_units:
-		if unit.unit_type != unit_type and unit.hp > 0:
+		if unit.unit_type != unit_type and not (unit.unit_type in colors.ALLIES[unit_type]) and unit.hp > 0:
 			var dist = global_position.distance_squared_to(unit.global_position)
 			if closest == null or dist < closest_dist:
 				closest = unit
@@ -182,7 +182,6 @@ func shoot_laser():
 	laser.show()
 	update_laser()
 	laser_timer.start()
-
 
 const laser_tolerance = 2
 

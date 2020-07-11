@@ -13,3 +13,10 @@ const COLORS = {
 	TYPE.NEUTRAL: Color(0.6, 0.6, 0.6, 1),
 	TYPE.DEFECTOR: Color(0.8, 0.1, 0.8, 1),
 }
+
+const ALLIES = {
+	TYPE.PLAYER: [],
+	TYPE.ENEMY: [TYPE.DEFECTOR],
+	TYPE.DEFECTOR: [TYPE.ENEMY],
+	TYPE.NEUTRAL: [],
+}

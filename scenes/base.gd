@@ -45,7 +45,9 @@ func setup_starting_units():
 		spawn_unit()
 
 func _on_timer_timeout():
-	spawn_unit()
+	# Don't generate units for neutral
+	if unit_type != colors.TYPE.NEUTRAL:
+		spawn_unit()
 
 func _on_regen_timer_timeout():
 	regen()

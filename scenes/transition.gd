@@ -20,7 +20,6 @@ func fade_in():
 	tween.start()
 
 func fade_out():
-	print("fading out")
 	tween.interpolate_method(self, "set_cutoff", 1.0, 0.0, DURATION)
 	tween.start()
 	
