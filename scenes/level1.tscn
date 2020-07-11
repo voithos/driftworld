@@ -8,23 +8,10 @@
 [node name="level" parent="." instance=ExtResource( 1 )]
 next_level = "res://scenes/level2.tscn"
 
-[node name="Polygon2D" type="Polygon2D" parent="level"]
-position = Vector2( -492.104, -270.493 )
-polygon = PoolVector2Array( 131, 41, 117, 298, 297, 280, 333, 138 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="level/Polygon2D"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="level/Polygon2D/StaticBody2D"]
-polygon = PoolVector2Array( 130.684, 40.2657, 114.263, 300.894, 305.496, 276.526, 334.631, 129.261, 131.214, 44.5035 )
-
 [node name="base" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 34.1565, 259.526 )
+position = Vector2( -2.61319, 16.2816 )
 unit_type = 0
 
-[node name="base3" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 566.502, 8.45569 )
-spawn_secs = 4.0
-
 [node name="base2" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 175.578, -441.924 )
+position = Vector2( -8.26999, -908.614 )
 unit_type = 1

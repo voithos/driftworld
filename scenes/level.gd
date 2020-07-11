@@ -15,7 +15,7 @@ func _ready():
 
 func _physics_process(delta):
 	check_end_state()
-	
+
 func check_end_state():
 	if session_complete:
 		return

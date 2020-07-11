@@ -14,6 +14,7 @@ Important:
   - Defection
   - Moral decay
 - Come up with a name
+- Playtesting
 
 Levels:
 - Level1 (only a neutral base)
@@ -31,6 +32,7 @@ Next:
 - Allow selecting bases and sending their units somewhere
 
 Polish:
+- Better color choices
 - Bloom effect
 - UI for Unit / base counts for each player
 - Death animation
@@ -46,6 +48,7 @@ Polish:
 - Max units (based on # of total bases, I guess)
 - Collision avoidance
 - Change default clear color subtly depending on who has the most units?
+- Buildup-guage based way of base takeover?
 
 Extras:
 - Towers

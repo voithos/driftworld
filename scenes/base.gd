@@ -8,7 +8,7 @@ export (int) var starting_hp = 100
 var hp = starting_hp
 
 export (float) var spawn_secs = 2.0
-export (float) var spawn_ring_width = 75.0
+export (float) var spawn_ring_width = 50.0
 export (float) var regen_secs = 1.0
 export (int) var regen_amt = 1
 export (int) var starting_units = 5

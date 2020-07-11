@@ -12,6 +12,8 @@ export (int) var attack_power = 1
 export (float) var attack_timeout = 2.0
 export (float) var laser_timeout = 0.25
 
+export (float) var morale = 100
+
 onready var attack_timer = Timer.new()
 var can_attack = true
 onready var laser_timer = Timer.new()
@@ -48,12 +50,10 @@ var current_target = Vector2()
 onready var laser = $laser
 
 func _ready():
-	$sprite.modulate = colors.COLORS[unit_type]
-	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
 	$selection.hide()
 	$laser.hide()
 	add_to_group("units")
-	add_to_group("units_" + str(unit_type))
+	become_type(unit_type)
 	
 	add_child(attack_timer)
 	attack_timer.connect("timeout", self, "_on_attack_timer_timeout")
@@ -84,8 +84,31 @@ func _physics_process(delta):
 	var other_units = detection.get_overlapping_bodies()
 	maintain_distance(other_units)
 	attack_enemies(other_units)
+	update_morale()
 
 	apply_steer()
+
+func update_morale():
+	if unit_type != colors.TYPE.PLAYER:
+		return
+
+	# TODO: Add cases
+	morale -= .3
+	
+	if morale <= 0:
+		defect()
+
+func defect():
+	hp = starting_hp
+	remove_from_group("units_" + str(unit_type))
+	become_type(colors.TYPE.DEFECTOR)
+	set_selected(false)
+
+func become_type(new_type):
+	unit_type = new_type
+	add_to_group("units_" + str(unit_type))
+	$sprite.modulate = colors.COLORS[unit_type]
+	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
 
 func maintain_distance(other_units):
 	# Maintain distance from other units.
