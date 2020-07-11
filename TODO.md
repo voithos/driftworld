@@ -20,9 +20,18 @@ Levels:
 - Level2 (enemy base and neutral base)
 - Level3 (multiple enemy bases and neutral bases)
 
-Polish:
+Next:
 - Base health bar
-- Level reset button / key? (Or pause menu)
+- Title screen
+- End screen
+- Level victory message
+- Eradication message
+- Background music
+- Sound effects
+- Allow selecting bases and sending their units somewhere
+
+Polish:
+- Bloom effect
 - UI for Unit / base counts for each player
 - Death animation
 - Spawn animation
@@ -30,19 +39,12 @@ Polish:
 - Unit trail animation
 - Base capture color animation
 - Base capture "swoosh" effect
+- Level reset button / key? (Or pause menu)
 - Background space particles
-- Bloom effect
-- Background music
-- Sound effects
 - Camera edge scrolling
-- Title screen
-- End screen
-- Level victory message
-- Eradication message
+- Animate the bases a bit better - rotation? super tiny wander steering? both?
 - Max units (based on # of total bases, I guess)
-- Have laser ray-cast to the surface of the bases
 - Collision avoidance
-- Allow selecting bases and sending their units somewhere
 - Change default clear color subtly depending on who has the most units?
 
 Extras:

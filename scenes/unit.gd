@@ -17,6 +17,7 @@ var can_attack = true
 onready var laser_timer = Timer.new()
 var is_attacking = false
 var attacking_unit = null
+var attacking_unit_radius = 0
 
 enum STATE {
 	IDLE,
@@ -48,7 +49,7 @@ onready var laser = $laser
 
 func _ready():
 	$sprite.modulate = colors.COLORS[unit_type]
-	$laser.modulate = colors.COLORS[unit_type].lightened(0.3)
+	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
 	$selection.hide()
 	$laser.hide()
 	add_to_group("units")
@@ -150,6 +151,7 @@ func attack(other_unit):
 	can_attack = false
 	is_attacking = true
 	attacking_unit = other_unit
+	attacking_unit_radius = other_unit.get_node("shape").shape.radius
 	attack_timer.start()
 	shoot_laser()
 
@@ -157,6 +159,9 @@ func shoot_laser():
 	laser.show()
 	update_laser()
 	laser_timer.start()
+
+
+const laser_tolerance = 2
 
 func update_laser():
 	if is_attacking:
@@ -166,7 +171,8 @@ func update_laser():
 			return
 
 		laser.look_at(attacking_unit.global_position)
-		laser.region_rect.end.x = global_position.distance_to(attacking_unit.global_position) / laser.scale.x
+		var dist = global_position.distance_to(attacking_unit.global_position) - attacking_unit_radius + laser_tolerance
+		laser.region_rect.end.x = dist / laser.scale.x
 
 func _on_laser_timer_timeout():
 	stop_attacking()
@@ -175,6 +181,7 @@ func stop_attacking():
 	laser.hide()
 	is_attacking = false
 	attacking_unit = null
+	attacking_unit_radius = 0
 
 func _on_attack_timer_timeout():
 	can_attack = true
