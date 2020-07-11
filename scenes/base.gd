@@ -9,6 +9,7 @@ var hp = starting_hp
 
 export (float) var SPAWN_SECS = 2.0
 export (float) var SPAWN_RING_WIDTH = 75.0
+export (int) var starting_units = 5
 
 onready var timer = Timer.new()
 onready var level = get_parent()
@@ -28,8 +29,18 @@ func _ready():
 	timer.set_wait_time(SPAWN_SECS)
 	timer.set_one_shot(false)
 	timer.start()
+	
+	call_deferred("setup_starting_units")
+
+func setup_starting_units():
+	for i in range(starting_units):
+		print("hi")
+		spawn_unit()
 
 func _on_timer_timeout():
+	spawn_unit()
+
+func spawn_unit():
 	var unit = unit_scene.instance()
 	unit.global_position = generate_spawn_position()
 	unit.unit_type = unit_type

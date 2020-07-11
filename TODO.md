@@ -1,33 +1,47 @@
 # TODOs
 
 Basics:
+- Base regeneration
 - Base capture
 - Eradication / game over / level won
-- Max units (based on # of total bases, I guess)
 - Enemy AI!!!
+  - Defensive: just keeps all units around, but attacks those attacking it
+  - Stupid: sends all new units to attack nearest non-self base immediately
+  - Strategic: builds a small army first, then attacks neutral bases in order to capture
+      - leaves some behind to defend
+      - if army is dying, will attempt to flee
+      - if base under attack, will redirect units to defend
 
 Important:
 - Morale system
   - Defection
   - Moral decay
 
+Levels:
+- Level1 (only a neutral base)
+- Level2 (enemy base and neutral base)
+- Level3 (multiple enemy bases and neutral bases)
+
 Polish:
-- Level reset button / key?
+- Base health bar
+- Level reset button / key? (Or pause menu)
 - UI for Unit / base counts for each player
 - Death animation
 - Spawn animation
 - Attack particle effect
 - Unit trail animation
-- Base health bar
 - Base capture color animation
 - Base capture "swoosh" effect
 - Background space particles
-- Sound effects
+- Bloom effect
 - Background music
+- Sound effects
 - Camera edge scrolling
 - Title screen
+- Max units (based on # of total bases, I guess)
 - Have laser ray-cast to the surface of the bases
 - Collision avoidance
+- Allow selecting bases and sending their units somewhere
 
 Extras:
 - Towers
