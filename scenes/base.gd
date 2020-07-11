@@ -7,11 +7,14 @@ export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 export (int) var starting_hp = 100
 var hp = starting_hp
 
-export (float) var SPAWN_SECS = 2.0
-export (float) var SPAWN_RING_WIDTH = 75.0
+export (float) var spawn_secs = 2.0
+export (float) var spawn_ring_width = 75.0
+export (float) var regen_secs = 1.0
+export (int) var regen_amt = 1
 export (int) var starting_units = 5
 
 onready var timer = Timer.new()
+onready var regen_timer = Timer.new()
 onready var level = get_parent()
 onready var spawn_radius = $shape.shape.radius
 
@@ -26,19 +29,30 @@ func _ready():
 	
 	add_child(timer)
 	timer.connect("timeout", self, "_on_timer_timeout")
-	timer.set_wait_time(SPAWN_SECS)
+	timer.set_wait_time(spawn_secs)
 	timer.set_one_shot(false)
 	timer.start()
+	
+	add_child(regen_timer)
+	regen_timer.connect("timeout", self, "_on_regen_timer_timeout")
+	regen_timer.set_wait_time(regen_secs)
+	regen_timer.set_one_shot(false)
+	regen_timer.start()
 	
 	call_deferred("setup_starting_units")
 
 func setup_starting_units():
 	for i in range(starting_units):
-		print("hi")
 		spawn_unit()
 
 func _on_timer_timeout():
 	spawn_unit()
+
+func _on_regen_timer_timeout():
+	regen()
+
+func regen():
+	hp = min(starting_hp, hp + regen_amt)
 
 func spawn_unit():
 	var unit = unit_scene.instance()
@@ -49,9 +63,8 @@ func spawn_unit():
 func generate_spawn_position():
 	var angle = randf() * PI * 2
 	var direction = Vector2(cos(angle), sin(angle))
-	var ring_offset = randf() * SPAWN_RING_WIDTH
+	var ring_offset = randf() * spawn_ring_width
 	return global_position + direction * (spawn_radius + ring_offset)
-
 
 func take_damage(damage):
 	hp -= damage

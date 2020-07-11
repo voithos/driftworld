@@ -1,7 +1,6 @@
 # TODOs
 
 Basics:
-- Base regeneration
 - Base capture
 - Eradication / game over / level won
 - Enemy AI!!!
@@ -67,3 +66,4 @@ Extras:
   - Neutral units? Nah
 - Attack laser
 - Attacking bases
+- Base regeneration
