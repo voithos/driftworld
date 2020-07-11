@@ -13,5 +13,11 @@ func _on_ui_selection(start, end):
 
 
 func _on_ui_right_click(pos):
+	move_selected(pos)
+
+func _on_ui_right_click_drag(pos):
+	move_selected(pos)
+
+func move_selected(pos):
 	for unit in get_tree().get_nodes_in_group("selected"):
 		unit.go_to(pos)

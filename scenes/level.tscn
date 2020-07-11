@@ -11,4 +11,5 @@ script = ExtResource( 4 )
 
 [node name="ui" parent="." instance=ExtResource( 2 )]
 [connection signal="right_click" from="ui" to="." method="_on_ui_right_click"]
+[connection signal="right_click_drag" from="ui" to="." method="_on_ui_right_click_drag"]
 [connection signal="selection" from="ui" to="." method="_on_ui_selection"]

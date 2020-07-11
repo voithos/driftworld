@@ -12,7 +12,7 @@ var state = STATE_IDLE
 export (float) var MOVE_SPEED = 100 # Pixels/second
 export (float) var WANDER_SPEED = 10 # Pixels/second
 export (float) var ARRIVE_RADIUS = 75
-export (float) var REPEL_RADIUS = 100
+export (float) var REPEL_RADIUS = 50
 export (float) var STEERING_FORCE = 10
 export (float) var MASS = 2
 export (float) var WANDER_DISTANCE = 100
@@ -48,7 +48,7 @@ func _physics_process(delta):
 	for unit in detection.get_overlapping_bodies():
 		if unit == self:
 			continue
-		steering.repel(unit.global_position, 0.2)
+		steering.repel(unit.global_position, 0.1)
 	apply_steer()
 
 func apply_steer():

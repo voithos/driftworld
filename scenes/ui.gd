@@ -6,6 +6,7 @@ var is_dragging = false
 
 signal selection
 signal right_click
+signal right_click_drag
 
 var camera
 
@@ -27,8 +28,11 @@ func _process(delta):
 		is_dragging = false
 		emit_signal("selection", start, end)
 		
-	if not is_dragging and Input.is_action_just_pressed("ui_mouse_right"):
-		emit_signal("right_click", get_global_mouse_position())
+	if not is_dragging:
+		if Input.is_action_just_pressed("ui_mouse_right"):
+			emit_signal("right_click", get_global_mouse_position())
+		elif Input.is_action_pressed("ui_mouse_right"):
+			emit_signal("right_click_drag", get_global_mouse_position())
 
 	draw_select_rect()
 

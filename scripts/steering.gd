@@ -59,7 +59,8 @@ func repel(position, target, repel_radius, current_motion, max_speed):
 	if distance > repel_radius:
 		return Vector2(0.0, 0.0)
 	else:
-		desired_motion *= 1.0 - (distance / repel_radius)
+		# TODO: Figure out why this isn't working
+		desired_motion *= 1.0# - (distance / repel_radius)
 	return desired_motion - current_motion
 
 # Wanders based on a "displacement circle" and a changing wander angle.

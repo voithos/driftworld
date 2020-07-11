@@ -3,6 +3,10 @@ extends Camera2D
 export var speed = 25
 export var zoomspeed = 10
 
+const MIN_ZOOM = 0.5
+const MAX_ZOOM = 3
+const ZOOM_CHANGE = 0.1
+
 var curzoom = 1.0
 
 func _ready():
@@ -16,13 +20,8 @@ func _process(delta):
 	
 	zoom.x = lerp(zoom.x, curzoom, zoomspeed * delta)
 	zoom.y = lerp(zoom.y, curzoom, zoomspeed * delta)
-	
-const MIN_ZOOM = 0.5
-const MAX_ZOOM = 2
-const ZOOM_CHANGE = 0.1
 
 func _input(event):
-	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == BUTTON_WHEEL_UP:
