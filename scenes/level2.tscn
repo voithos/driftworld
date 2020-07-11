@@ -6,7 +6,6 @@
 [node name="level1" type="Node2D"]
 
 [node name="level" parent="." instance=ExtResource( 1 )]
-next_level = "res://scenes/level2.tscn"
 
 [node name="Polygon2D" type="Polygon2D" parent="level"]
 position = Vector2( -492.104, -270.493 )

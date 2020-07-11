@@ -1,7 +1,6 @@
 # TODOs
 
 Basics:
-- Eradication / game over / level won
 - Enemy AI!!!
   - Defensive: just keeps all units around, but attacks those attacking it
   - Stupid: sends all new units to attack nearest non-self base immediately
@@ -14,6 +13,7 @@ Important:
 - Morale system
   - Defection
   - Moral decay
+- Come up with a name
 
 Levels:
 - Level1 (only a neutral base)
@@ -36,11 +36,14 @@ Polish:
 - Sound effects
 - Camera edge scrolling
 - Title screen
+- End screen
+- Level victory message
+- Eradication message
 - Max units (based on # of total bases, I guess)
 - Have laser ray-cast to the surface of the bases
 - Collision avoidance
 - Allow selecting bases and sending their units somewhere
-- Level transitions
+- Change default clear color subtly depending on who has the most units?
 
 Extras:
 - Towers
@@ -68,3 +71,5 @@ Extras:
 - Attacking bases
 - Base regeneration
 - Base capture
+- Eradication / game over / level won
+- Level transitions
