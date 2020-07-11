@@ -23,9 +23,8 @@ const unit_scene = preload("res://scenes/unit.tscn")
 func _ready():
 	randomize()
 	
-	$sprite.modulate = colors.COLORS[unit_type].darkened(0.15)
 	add_to_group("bases")
-	add_to_group("bases_" + str(unit_type))
+	become_type(unit_type)
 	
 	add_child(timer)
 	timer.connect("timeout", self, "_on_timer_timeout")
@@ -66,10 +65,17 @@ func generate_spawn_position():
 	var ring_offset = randf() * spawn_ring_width
 	return global_position + direction * (spawn_radius + ring_offset)
 
-func take_damage(damage):
+func take_damage(damage, from_type):
 	hp -= damage
 	if hp <= 0:
-		die()
+		takeover(from_type)
 
-func die():
-	queue_free()
+func takeover(new_type):
+	hp = starting_hp
+	remove_from_group("bases_" + str(unit_type))
+	become_type(new_type)
+
+func become_type(new_type):
+	unit_type = new_type
+	add_to_group("bases_" + str(unit_type))
+	$sprite.modulate = colors.COLORS[unit_type].darkened(0.15)

@@ -15,8 +15,8 @@ func _ready():
 func _process(delta):
 	var horizontal = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 	var vertical = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
-	position.x = lerp(position.x, position.x + horizontal * speed, speed * delta)
-	position.y = lerp(position.y, position.y + vertical * speed, speed * delta)
+	position.x = lerp(position.x, position.x + horizontal * speed * curzoom, speed * delta)
+	position.y = lerp(position.y, position.y + vertical * speed * curzoom, speed * delta)
 	
 	zoom.x = lerp(zoom.x, curzoom, zoomspeed * delta)
 	zoom.y = lerp(zoom.y, curzoom, zoomspeed * delta)

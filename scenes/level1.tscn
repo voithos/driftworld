@@ -20,6 +20,10 @@ polygon = PoolVector2Array( 130.684, 40.2657, 114.263, 300.894, 305.496, 276.526
 position = Vector2( 34.1565, 259.526 )
 unit_type = 0
 
+[node name="base3" parent="level" instance=ExtResource( 3 )]
+position = Vector2( 566.502, 8.45569 )
+spawn_secs = 4.0
+
 [node name="base2" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 175.578, -441.924 )
 unit_type = 1

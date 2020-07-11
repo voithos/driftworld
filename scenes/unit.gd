@@ -146,7 +146,7 @@ func attack_enemies(other_units):
 		attack(closest)
 
 func attack(other_unit):
-	other_unit.take_damage(attack_power)
+	other_unit.take_damage(attack_power, unit_type)
 	can_attack = false
 	is_attacking = true
 	attacking_unit = other_unit
@@ -179,7 +179,7 @@ func stop_attacking():
 func _on_attack_timer_timeout():
 	can_attack = true
 
-func take_damage(damage):
+func take_damage(damage, from_type):
 	hp -= damage
 	if hp <= 0:
 		die()

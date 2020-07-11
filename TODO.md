@@ -1,7 +1,6 @@
 # TODOs
 
 Basics:
-- Base capture
 - Eradication / game over / level won
 - Enemy AI!!!
   - Defensive: just keeps all units around, but attacks those attacking it
@@ -41,6 +40,7 @@ Polish:
 - Have laser ray-cast to the surface of the bases
 - Collision avoidance
 - Allow selecting bases and sending their units somewhere
+- Level transitions
 
 Extras:
 - Towers
@@ -67,3 +67,4 @@ Extras:
 - Attack laser
 - Attacking bases
 - Base regeneration
+- Base capture
