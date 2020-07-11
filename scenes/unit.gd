@@ -1,12 +1,16 @@
 extends KinematicBody2D
 
-export var unit_base_color = Color(1, 1, 1)
+const colors = preload("res://scripts/colors.gd")
+
+export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 export var selected = false setget set_selected
 
-const STATE_IDLE = "idle"
-const STATE_MOVE = "move"
+enum STATE {
+	IDLE,
+	MOVE,
+}
 
-var state = STATE_IDLE
+var state = STATE.IDLE
 
 # Steering
 export (float) var MOVE_SPEED = 100 # Pixels/second
@@ -29,26 +33,32 @@ var current_motion = Vector2()
 var current_target = Vector2()
 
 func _ready():
-	$sprite.modulate = unit_base_color
+	$sprite.modulate = colors.COLORS[unit_type]
 	$selection.hide()
 	add_to_group("units")
+
+const MAX_REPEL_COUNT = 10
 
 func _physics_process(delta):
 	check_arrival()
 	
-	if state == STATE_IDLE:
+	if state == STATE.IDLE:
 		SPEED = WANDER_SPEED
 		steering.wander()
-	elif state == STATE_MOVE:
+	elif state == STATE.MOVE:
 		SPEED = MOVE_SPEED
 		steering.arrive(current_target)
 		steering.wander(0.05)
 
 	# Maintain distance from other units.
+	var count = 0
 	for unit in detection.get_overlapping_bodies():
 		if unit == self:
 			continue
 		steering.repel(unit.global_position, 0.1)
+		count += 1
+		if count > MAX_REPEL_COUNT:
+			break
 	apply_steer()
 
 func apply_steer():
@@ -57,9 +67,9 @@ func apply_steer():
 	move_and_slide(motion)
 
 func check_arrival():
-	if state == STATE_MOVE:
+	if state == STATE.MOVE:
 		if global_position.distance_squared_to(current_target) < ARRIVAL_DIST_SQUARED:
-			state = STATE_IDLE
+			state = STATE.IDLE
 
 func _on_unit_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
@@ -80,5 +90,5 @@ func set_selected(value):
 		$selection.visible = selected
 
 func go_to(pos):
-	state = STATE_MOVE
+	state = STATE.MOVE
 	current_target = pos

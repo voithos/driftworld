@@ -18,15 +18,16 @@ polygon = PoolVector2Array( 131, 41, 117, 298, 297, 280, 333, 138 )
 polygon = PoolVector2Array( 130.684, 40.2657, 114.263, 300.894, 305.496, 276.526, 334.631, 129.261, 131.214, 44.5035 )
 
 [node name="unit" parent="level" instance=ExtResource( 2 )]
-unit_base_color = Color( 0.0705882, 0.745098, 0.745098, 1 )
+unit_type = 0
 
 [node name="unit2" parent="level" instance=ExtResource( 2 )]
 position = Vector2( 65.0538, 61.1647 )
-unit_base_color = Color( 0.0705882, 0.745098, 0.745098, 1 )
+unit_type = 0
 
 [node name="unit3" parent="level" instance=ExtResource( 2 )]
 position = Vector2( 197.636, 44.5477 )
-unit_base_color = Color( 0.0705882, 0.745098, 0.745098, 1 )
+unit_type = 0
 
 [node name="base" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 34.1565, 259.526 )
+unit_type = 0

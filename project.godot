@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 
 Screen="*res://scripts/screen.gd"
 Steering="*res://scripts/steering.gd"
+Colors="*res://scripts/colors.gd"
 
 [display]
 
