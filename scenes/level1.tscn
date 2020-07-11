@@ -28,6 +28,22 @@ unit_type = 0
 position = Vector2( 197.636, 44.5477 )
 unit_type = 0
 
+[node name="unit4" parent="level" instance=ExtResource( 2 )]
+position = Vector2( 90.5526, -293.158 )
+unit_type = 1
+
+[node name="unit5" parent="level" instance=ExtResource( 2 )]
+position = Vector2( 202.275, -305.886 )
+unit_type = 1
+
+[node name="unit6" parent="level" instance=ExtResource( 2 )]
+position = Vector2( 164.092, -263.459 )
+unit_type = 1
+
+[node name="unit7" parent="level" instance=ExtResource( 2 )]
+position = Vector2( 306.927, -303.057 )
+unit_type = 1
+
 [node name="base" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 34.1565, 259.526 )
 unit_type = 0

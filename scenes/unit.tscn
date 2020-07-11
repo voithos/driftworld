@@ -1,20 +1,29 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/unit.png" type="Texture" id=1]
 [ext_resource path="res://scenes/unit.gd" type="Script" id=2]
 [ext_resource path="res://assets/selection.png" type="Texture" id=3]
 [ext_resource path="res://scripts/entity_steering.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/laser.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 150.0
+radius = 100.0
 
 [node name="unit" type="KinematicBody2D"]
 input_pickable = true
 collision_layer = 3
 script = ExtResource( 2 )
+
+[node name="laser" type="Sprite" parent="."]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+centered = false
+offset = Vector2( 0, -15 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 200, 30 )
 
 [node name="sprite" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )

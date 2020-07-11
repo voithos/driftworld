@@ -4,7 +4,7 @@ const colors = preload("res://scripts/colors.gd")
 
 export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 
-export (float) var SPAWN_SECS = 1.0
+export (float) var SPAWN_SECS = 2.0
 export (float) var SPAWN_RING_WIDTH = 75.0
 
 onready var timer = Timer.new()
@@ -18,6 +18,7 @@ func _ready():
 	
 	$sprite.modulate = colors.COLORS[unit_type].darkened(0.15)
 	add_to_group("bases")
+	add_to_group("bases_" + str(unit_type))
 	
 	add_child(timer)
 	timer.connect("timeout", self, "_on_timer_timeout")

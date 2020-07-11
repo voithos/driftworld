@@ -1,14 +1,7 @@
 # TODOs
 
 Basics:
-- Color modulation based on unit type
-  - Player, neutral, and enemy colors
-  - N enemy colors
-  - M defector colors
-- Enemies
-- Neutral bases
-  - Neutral units? Nah
-- Attacking
+- Attacking bases
 - Base capture
 - Collision avoidance
 - Eradication / game over / level won
@@ -25,12 +18,16 @@ Polish:
 - UI for Unit / base counts for each player
 - Death animation
 - Spawn animation
-- Attack laser
 - Attack particle effect
+- Unit trail animation
 - Base health bar
 - Base capture color animation
+- Base capture "swoosh" effect
 - Background space particles
+- Sound effects
+- Background music
 - Camera edge scrolling
+- Title screen
 
 Extras:
 - Towers
@@ -46,3 +43,12 @@ Extras:
 - Movement
 - Base
 - Spawning
+- Color modulation based on unit type
+  - Player, neutral, and enemy colors
+  - N enemy colors?
+  - M defector colors?
+- Enemies
+- Attacking
+- Neutral bases
+  - Neutral units? Nah
+- Attack laser
