@@ -1,12 +1,6 @@
 # TODOs
 
 Next:
-- Enemy AI!!!!!!
-  - Stupid: sends all new units to attack nearest non-self base immediately
-  - Strategic: builds a small army first, then attacks neutral bases in order to capture
-      - leaves some behind to defend
-      - if army is dying, will attempt to flee
-      - if base under attack, will redirect units to defend
 - Playtest / balance
 - Create itch.io page
 
@@ -83,3 +77,9 @@ Extras:
 - Set up levels
 - Add extra morale bits
 - Defensive: just keeps all units around, but attacks those attacking it
+- Enemy AI!!!!!!
+  - Stupid: sends all new units to attack nearest non-self base immediately
+  - Strategic: builds a small army first, then attacks neutral bases in order to capture
+      - leaves some behind to defend
+      - if army is dying, will attempt to flee
+      - if base under attack, will redirect units to defend

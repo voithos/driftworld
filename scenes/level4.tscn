@@ -36,5 +36,5 @@ strategy = 1
 unit_type = 1
 
 [node name="ai3" parent="level" instance=ExtResource( 4 )]
-strategy = 1
+strategy = 2
 unit_type = 3

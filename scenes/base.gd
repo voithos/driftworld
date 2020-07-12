@@ -53,6 +53,7 @@ var aggressor_pos = null
 export (float) var attack_memory = 5.0
 
 var ai_target_base = null
+var ai_staging_time_left = 0
 
 const unit_scene = preload("res://scenes/unit.tscn")
 
@@ -194,6 +195,7 @@ func takeover(new_type):
 	become_type(new_type)
 	set_selected(false)
 	ai_target_base = null
+	ai_staging_time_left = 0
 
 func become_type(new_type):
 	unit_type = new_type

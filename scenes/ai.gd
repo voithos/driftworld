@@ -21,21 +21,23 @@ func _ready():
 func _physics_process(delta):
 	delta_since_tick += delta
 	if delta_since_tick >= AI_TICK:
-		think()
+		think(AI_TICK)
 		delta_since_tick = 0.0
 
-func think():
+func think(delta):
 	var units = get_tree().get_nodes_in_group("units_" + str(unit_type))
 	var bases = get_tree().get_nodes_in_group("bases_" + str(unit_type))
 	match strategy:
 		STRATEGY.DEFENSIVE:
-			defense(units, bases)
+			defense(delta, units, bases)
 		STRATEGY.AGGRESSIVE:
-			aggression(units, bases)
+			aggression(delta, units, bases)
 		STRATEGY.BALANCED:
-			balanced(units, bases)
+			balanced(delta, units, bases)
 
-func defense(units, bases):
+# TODO: Reduce code duplication
+
+func defense(delta, units, bases):
 	var divided = divide_units(units, bases)
 	
 	for i in range(len(bases)):
@@ -59,7 +61,7 @@ func defense(units, bases):
 			prob_go_to(base_units, b.global_position, 0.5)
 			idle_if_close_to_base(base_units, b.global_position, 1)
 
-func aggression(units, bases):
+func aggression(delta, units, bases):
 	var divided = divide_units(units, bases)
 	var enemy_bases = get_enemy_bases()
 
@@ -98,8 +100,63 @@ func aggression(units, bases):
 			if rand_base:
 				prob_go_to([u], rand_base.global_position, 1.0)
 
-func balanced(units, bases):
-	pass
+const MIN_BALANCED_UNITS = 15
+const STAGING_TIME = 6.0
+const STAGING_DIST = 200
+
+func balanced(delta, units, bases):
+	var divided = divide_units(units, bases)
+	var enemy_bases = get_enemy_bases()
+
+	for i in range(len(bases)):
+		var b = bases[i]
+		var base_units = divided[i]
+
+		# Prioritize base defense
+		if b.is_under_attack:
+			prob_go_to(base_units, b.aggressor_pos, 0.8)
+			continue
+
+		var under_attack = false
+		for unit in base_units:
+			if unit.is_under_attack:
+				prob_go_to(base_units, unit.aggressor_pos, 0.5)
+				under_attack = true
+				break
+
+		# Go on the offensive
+		if not under_attack:
+			# Wait until sufficient units are available.
+			if len(base_units) < MIN_BALANCED_UNITS:
+				b.ai_target_base = null
+				prob_go_to(base_units, b.global_position, 0.5)
+				idle_if_close_to_base(base_units, b.global_position, 1)
+			# Try to latch onto a target
+			elif b.ai_target_base == null or b.ai_target_base.unit_type == unit_type:
+				# No target, or target has been captured
+				var close = get_close_bases(enemy_bases, b.global_position)
+				var rand_base = pick_random(close)
+				if rand_base:
+					b.ai_target_base = rand_base
+					b.ai_staging_time_left = STAGING_TIME
+
+			if b.ai_target_base:
+				if b.ai_staging_time_left < 0:
+					prob_go_to(base_units, b.ai_target_base.global_position, 0.5)
+				else:
+					b.ai_staging_time_left -= delta
+					print(b.ai_staging_time_left)
+					var angle = b.global_position.angle_to(b.ai_target_base.global_position)
+					var staging_location = b.global_position + Vector2(cos(angle), sin(angle)) * STAGING_DIST
+					prob_go_to(base_units, staging_location, 0.9)
+	
+	# If you have no bases, just attack
+	if len(bases) == 0:
+		for u in units:
+			var close = get_close_bases(enemy_bases, u.global_position)
+			var rand_base = pick_random(close)
+			if rand_base:
+				prob_go_to([u], rand_base.global_position, 1.0)
 
 ## Helpers
 
