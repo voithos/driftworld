@@ -75,5 +75,5 @@ ui_mouse_right={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.0392157, 0.0392157, 0.0392157, 1 )
+environment/default_clear_color=Color( 0.0431373, 0.0470588, 0.227451, 1 )
 environment/default_environment="res://default_env.tres"
