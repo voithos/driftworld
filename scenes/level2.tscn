@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level2.gd" type="Script" id=2]
 [ext_resource path="res://scenes/base.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ai.tscn" type="PackedScene" id=4]
 
 [node name="level2" type="Node2D"]
 script = ExtResource( 2 )
@@ -23,3 +24,13 @@ unit_type = 1
 [node name="base3" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 1163.13, 6.7937 )
 starting_units = 25
+
+[node name="ai" parent="level" instance=ExtResource( 4 )]
+
+[node name="ai2" parent="level" instance=ExtResource( 4 )]
+strategy = 1
+unit_type = 1
+
+[node name="ai3" parent="level" instance=ExtResource( 4 )]
+strategy = 1
+unit_type = 3

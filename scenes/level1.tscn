@@ -24,3 +24,6 @@ unit_move_speed = 50.0
 
 [node name="ai" parent="level" instance=ExtResource( 4 )]
 unit_type = 1
+
+[node name="ai2" parent="level" instance=ExtResource( 4 )]
+unit_type = 3

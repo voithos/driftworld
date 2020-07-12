@@ -60,12 +60,78 @@ func defense(units, bases):
 			idle_if_close_to_base(base_units, b.global_position, 1)
 
 func aggression(units, bases):
-	pass
+	var divided = divide_units(units, bases)
+	var enemy_bases = get_enemy_bases()
+
+	for i in range(len(bases)):
+		var b = bases[i]
+		var base_units = divided[i]
+
+		# Prioritize base defense
+		if b.is_under_attack:
+			prob_go_to(base_units, b.aggressor_pos, 0.8)
+			continue
+
+		var under_attack = false
+		for unit in base_units:
+			if unit.is_under_attack:
+				prob_go_to(base_units, unit.aggressor_pos, 0.5)
+				under_attack = true
+				break
+
+		# Go on the offensive
+		if not under_attack:
+			var close = get_close_bases(enemy_bases, b.global_position)
+			var rand_base = pick_random(close)
+			if rand_base:
+				prob_go_to(base_units, rand_base.global_position, 0.5)
+	
+	# If you have no bases, just attack
+	if len(bases) == 0:
+		for u in units:
+			var close = get_close_bases(enemy_bases, u.global_position)
+			var rand_base = pick_random(close)
+			if rand_base:
+				prob_go_to([u], rand_base.global_position, 1.0)
 
 func balanced(units, bases):
 	pass
 
 ## Helpers
+
+func pick_random(arr):
+	if arr:
+		return arr[randi() % arr.size()]
+	return null
+
+const CLOSENESS_THRESHOLD = 300
+func get_close_bases(bases, from_pos):
+	var closest = null
+	var closest_dist = -1
+	for b in bases:
+		var dist = from_pos.distance_squared_to(b.global_position)
+		if dist < closest_dist or closest == null:
+			closest = b
+			closest_dist = dist
+	
+	if closest == null:
+		return []
+	var res = [closest]
+	for b in bases:
+		if from_pos.distance_squared_to(b.global_position) - closest_dist < CLOSENESS_THRESHOLD:
+			res.append(b)
+	return res
+
+func get_enemy_bases():
+	var bases = []
+	for c in colors.TYPE:
+		var col = colors.TYPE[c]
+		if col == unit_type or col in colors.ALLIES[unit_type]:
+			continue
+		var bs = get_tree().get_nodes_in_group("bases_" + str(col))
+		for b in bs:
+			bases.append(b)
+	return bases
 	
 func prob_go_to(units, pos, prob):
 	for u in units:
@@ -76,7 +142,6 @@ const IDLE_DISTANCE_SQUARED = 200*200
 
 func idle_if_close_to_base(units, pos, prob):
 	for u in units:
-		print(u.global_position.distance_squared_to(pos))
 		if u.global_position.distance_squared_to(pos) <= IDLE_DISTANCE_SQUARED and randf() < prob:
 			u.go_idle()
 
