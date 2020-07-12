@@ -145,7 +145,6 @@ func balanced(delta, units, bases):
 					prob_go_to(base_units, b.ai_target_base.global_position, 0.5)
 				else:
 					b.ai_staging_time_left -= delta
-					print(b.ai_staging_time_left)
 					var angle = b.global_position.angle_to(b.ai_target_base.global_position)
 					var staging_location = b.global_position + Vector2(cos(angle), sin(angle)) * STAGING_DIST
 					prob_go_to(base_units, staging_location, 0.9)

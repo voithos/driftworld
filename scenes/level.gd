@@ -15,10 +15,20 @@ signal loaded
 signal eradicated
 signal victorious
 
+onready var goto = $goto
+
 var is_loading = true
 var session_complete = false
 
+onready var tween = Tween.new()
+const GOTO_START_SCALE = 0.5
+const GOTO_ANIM_TIME = 0.3
+
 func _ready():
+	add_child(tween)
+	goto.hide()
+	goto.scale = Vector2(GOTO_START_SCALE, GOTO_START_SCALE)
+
 	music.play_background()
 	add_to_group("level")
 	create_boundary()
@@ -116,6 +126,13 @@ func _on_ui_selection(start, end):
 
 func _on_ui_right_click(pos):
 	move_selected(pos)
+	draw_goto(pos)
+
+func draw_goto(pos):
+	goto.global_position = pos
+	goto.show()
+	tween.interpolate_property(goto, "scale", Vector2(GOTO_START_SCALE, GOTO_START_SCALE), Vector2(0, 0), GOTO_ANIM_TIME)
+	tween.start()
 
 func _on_ui_right_click_drag(pos):
 	move_selected(pos)

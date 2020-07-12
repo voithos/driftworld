@@ -5,7 +5,6 @@ Next:
 - Create itch.io page
 
 Polish:
-- Cursor animation
 - Bloom effect
 - Death animation
 - Attack particle effect
@@ -83,3 +82,4 @@ Extras:
       - leaves some behind to defend
       - if army is dying, will attempt to flee
       - if base under attack, will redirect units to defend
+- Cursor animation

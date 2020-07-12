@@ -34,6 +34,8 @@ window/size/width=0
 window/size/height=768
 window/size/test_width=1024
 window/size/test_height=768
+mouse_cursor/custom_image="res://assets/cursor.png"
+mouse_cursor/custom_image_hotspot=Vector2( 8, 8 )
 
 [input]
 
