@@ -2,10 +2,14 @@ extends Node2D
 
 var is_loading = false
 
+onready var music = get_node("/root/Music")
+
 const TITLE_EMERGE_TIME = 5
 const CLICK_EMERGE_TIME = 2
 
 func _ready():
+	music.play_background()
+	
 	$canvas/titletext.modulate.a = 0
 	$canvas/click.modulate.a = 0
 	

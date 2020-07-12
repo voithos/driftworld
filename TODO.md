@@ -23,22 +23,23 @@ Next:
 
 Polish:
 - Bloom effect
-- UI for Unit / base counts for each player
 - Death animation
-- Spawn animation
-- Cursor animation
 - Attack particle effect
-- Unit trail animation
 - Base capture color animation
 - Base capture "swoosh" effect
+- Cursor animation
 - Background space particles
+- Buildup-guage based way of base takeover?
+
+Cutting block:
+- UI for Unit / base counts for each player
+- Collision avoidance
 - Camera edge scrolling
 - Max units (based on # of total bases, I guess)
-- Collision avoidance
-- Change default clear color subtly depending on who has the most units?
-- Buildup-guage based way of base takeover?
 - Scoring system? :O
 - Save data + level selector?
+- Unit trail animation
+- Spawn animation
 
 Bugs:
 - Fix motion jankiness when becoming defector

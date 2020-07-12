@@ -1,8 +1,12 @@
 extends Node2D
 
+onready var music = get_node("/root/Music")
+
 const STEP_TIME = 2
 
 func _ready():
+	music.play_background()
+	
 	$canvas/endtext.modulate.a = 0
 	$canvas/endtext2.modulate.a = 0
 	$canvas/endtext3.modulate.a = 0
