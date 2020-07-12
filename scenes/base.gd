@@ -22,15 +22,28 @@ onready var regen_timer = Timer.new()
 onready var level = get_parent()
 onready var spawn_radius = $shape.shape.radius
 
+onready var steering = $steering
 onready var detection = $detection
 onready var healthbar = $healthbar
+onready var sprite = $sprite
 onready var healthbar_tween = Tween.new()
 var healthbar_shown = false
 const HEALTHBAR_ANIM_TIME = 0.5
 
 const LASER_TOLERANCE = 10
 
+export (float) var WANDER_DISTANCE = 100
+export (float) var WANDER_RADIUS = 200
+export (float) var WANDER_ANGLE_CHANGE = .5 # Radians
+export (float) var STEERING_FORCE = 10
+export (float) var MASS = 100
+export (float) var SPEED = 1
+
+var current_motion = Vector2()
 var new_units_target
+
+const ROTATION_SPEED = 0.4
+const ROTATION_DRIFT = 0.2
 
 const unit_scene = preload("res://scenes/unit.tscn")
 
@@ -58,6 +71,17 @@ func _ready():
 
 func _process(delta):
 	check_hotkeys()
+
+func _physics_process(delta):
+	# Decided against steering for now.
+	#steering.wander()
+	#apply_steer(delta)
+	sprite.rotation += (ROTATION_SPEED + randf() * ROTATION_DRIFT) * delta
+	
+func apply_steer(delta):
+	var motion = steering.steer()
+	current_motion = motion
+	move_and_collide(motion * delta)
 
 func check_hotkeys():
 	if selected and Input.is_action_just_pressed("ui_cancel"):

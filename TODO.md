@@ -38,7 +38,6 @@ Polish:
 - Base capture "swoosh" effect
 - Background space particles
 - Camera edge scrolling
-- Animate the bases a bit better - rotation? super tiny wander steering? both?
 - Max units (based on # of total bases, I guess)
 - Collision avoidance
 - Change default clear color subtly depending on who has the most units?
@@ -48,6 +47,7 @@ Polish:
 
 Bugs:
 - Fix motion jankiness when becoming defector
+- HP bar is sometimes below units
 
 Extras:
 - Towers
@@ -86,3 +86,4 @@ Extras:
 - Come up with a name
 - Base health bar
 - Allow selecting bases and sending their units somewhere
+- Animate the bases a bit better - rotation? super tiny wander steering? both?

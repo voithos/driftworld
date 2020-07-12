@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/base.png" type="Texture" id=1]
 [ext_resource path="res://scenes/base.gd" type="Script" id=2]
 [ext_resource path="res://assets/health_over.png" type="Texture" id=3]
 [ext_resource path="res://assets/health_fill.png" type="Texture" id=4]
 [ext_resource path="res://assets/base_selection.png" type="Texture" id=5]
+[ext_resource path="res://scripts/entity_steering.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 115.0
@@ -29,6 +30,8 @@ texture = ExtResource( 5 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="steering" parent="." instance=ExtResource( 6 )]
 
 [node name="detection" type="Area2D" parent="."]
 input_pickable = false
