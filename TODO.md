@@ -1,6 +1,8 @@
 # TODOs
 
-Basics:
+Next:
+- Set up levels
+- Add extra morale bits
 - Enemy AI!!!!!!
   - Defensive: just keeps all units around, but attacks those attacking it
   - Stupid: sends all new units to attack nearest non-self base immediately
@@ -8,25 +10,18 @@ Basics:
       - leaves some behind to defend
       - if army is dying, will attempt to flee
       - if base under attack, will redirect units to defend
-
-Important:
-- Playtesting
-
-Levels:
-- Level1 (only a neutral base)
-- Level2 (enemy base and neutral base)
-- Level3 (multiple enemy bases and neutral bases)
-
-Next:
-- Background music
-- Sound effects
+- Playtest / balance
+- Create itch.io page
 
 Polish:
+- Fear system / fleeing?
 - Bloom effect
 - Death animation
 - Attack particle effect
+- Attack / death sound effects
 - Base capture color animation
 - Base capture "swoosh" effect
+- Base capture sound effect
 - Cursor animation
 - Background space particles
 - Buildup-guage based way of base takeover?
@@ -88,3 +83,4 @@ Extras:
 - Eradication message
 - Title screen
 - End screen
+- Background music

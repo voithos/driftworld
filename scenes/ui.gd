@@ -65,11 +65,11 @@ func show_message(text):
 		yield(self, "message_complete")
 	is_showing_message = true
 	$canvas/message.text = text
-	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME)
+	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME, Tween.TRANS_SINE)
 	text_tween.start()
 	yield(text_tween, "tween_completed")
 	yield(get_tree().create_timer(MESSAGE_SHOW_TIME), "timeout")
-	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), MESSAGE_ANIM_TIME)
+	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), MESSAGE_ANIM_TIME, Tween.TRANS_SINE)
 	text_tween.start()
 	yield(text_tween, "tween_completed")
 	is_showing_message = false
@@ -80,7 +80,7 @@ func show_bigtext(text):
 		yield(self, "message_complete")
 	is_showing_message = true
 	$canvas/bigtext.text = text
-	text_tween.interpolate_property($canvas/bigtext, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME)
+	text_tween.interpolate_property($canvas/bigtext, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME, Tween.TRANS_SINE)
 	text_tween.start()
 	yield(text_tween, "tween_completed")
 	is_showing_message = false

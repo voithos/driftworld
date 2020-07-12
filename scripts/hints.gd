@@ -1,8 +1,8 @@
 extends Node
 
 const hints = {
-	"directive": ["destroy the enemy base"],
-	"safety": ["there is safety in numbers"],
+	"directive": ["capture the enemy base"],
+	"safety": ["the void is harsh", "but there is safety in numbers"],
 	"drifters": ["the drifters grow stronger", "they are against you"],
 }
 

@@ -54,7 +54,7 @@ var state = STATE.IDLE
 export (float) var MOVE_SPEED = 100 # Pixels/second
 export (float) var WANDER_SPEED = 10 # Pixels/second
 export (float) var ARRIVE_RADIUS = 75
-export (float) var REPEL_RADIUS = 50
+export (float) var REPEL_RADIUS = 20
 export (float) var STEERING_FORCE = 10
 export (float) var MASS = 2
 export (float) var WANDER_DISTANCE = 100
@@ -106,7 +106,7 @@ func _physics_process(delta):
 	
 	if state == STATE.IDLE:
 		SPEED = WANDER_SPEED
-		steering.wander()
+		steering.wander(0.5)
 	elif state == STATE.MOVE:
 		SPEED = MOVE_SPEED
 		steering.arrive(current_target)
@@ -196,10 +196,10 @@ func maintain_distance(other_units):
 	for unit in other_units:
 		if unit == self:
 			continue
-		steering.repel(unit.global_position, 0.1)
+		steering.repel(unit.global_position, 1)
 		count += 1
-		if count > MAX_REPEL_COUNT:
-			break
+		#if count > MAX_REPEL_COUNT:
+		#	break
 
 func apply_steer():
 	var motion = steering.steer()

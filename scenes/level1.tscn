@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level1.gd" type="Script" id=2]
 [ext_resource path="res://scenes/base.tscn" type="PackedScene" id=3]
 
 [node name="level1" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="level" parent="." instance=ExtResource( 1 )]
 next_level = "res://scenes/level2.tscn"
+boundary_topleft = Vector2( -1000, -1500 )
+boundary_size = Vector2( 2000, 2000 )
 
 [node name="base" parent="level" instance=ExtResource( 3 )]
 position = Vector2( -2.61319, 16.2816 )
 unit_type = 0
 
 [node name="base2" parent="level" instance=ExtResource( 3 )]
-position = Vector2( -8.26999, -908.614 )
+position = Vector2( -2.27658, -1031.48 )
 unit_type = 1

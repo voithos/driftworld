@@ -6,11 +6,12 @@ onready var hints = get_node("/root/Hints")
 onready var music = get_node("/root/Music")
 
 export (String, FILE, "*.tscn") var next_level
-export (Vector2) var boundary_topleft = Vector2(-750, -750)
-export (Vector2) var boundary_size = Vector2(1500, 1500)
+export (Vector2) var boundary_topleft = Vector2(-1500, -1500)
+export (Vector2) var boundary_size = Vector2(3000, 3000)
 
 export (Rect2) var myhoney
 
+signal loaded
 signal eradicated
 signal victorious
 
@@ -24,7 +25,7 @@ func _ready():
 	$camera.set_boundary(boundary_topleft, boundary_size)
 	yield($transition, "fade_complete")
 	is_loading = false
-	hints.show_hint($ui, "directive")
+	emit_signal("loaded")
 
 const BOUNDARY_THICKNESS = 50
 
