@@ -3,6 +3,10 @@ extends Node2D
 const colors = preload("res://scripts/colors.gd")
 
 export (String, FILE, "*.tscn") var next_level
+export (Vector2) var boundary_topleft = Vector2(-750, -750)
+export (Vector2) var boundary_size = Vector2(1500, 1500)
+
+export (Rect2) var myhoney
 
 signal eradicated
 signal victorious
@@ -13,8 +17,37 @@ var session_complete = false
 func _ready():
 	assert(next_level)
 	add_to_group("level")
+	create_boundary()
+	$camera.set_boundary(boundary_topleft, boundary_size)
 	yield($transition, "fade_complete")
 	is_loading = false
+
+const BOUNDARY_THICKNESS = 50
+
+func create_boundary():
+	var top = CollisionShape2D.new()
+	$boundary.add_child(top)
+	var left = CollisionShape2D.new()
+	$boundary.add_child(left)
+	var bottom = CollisionShape2D.new()
+	$boundary.add_child(bottom)
+	var right = CollisionShape2D.new()
+	$boundary.add_child(right)
+	
+	top.shape = RectangleShape2D.new()
+	left.shape = RectangleShape2D.new()
+	bottom.shape = RectangleShape2D.new()
+	right.shape = RectangleShape2D.new()
+	
+	top.shape.extents = Vector2(boundary_size.x / 2, BOUNDARY_THICKNESS)
+	bottom.shape.extents = Vector2(boundary_size.x / 2, BOUNDARY_THICKNESS)
+	left.shape.extents = Vector2(BOUNDARY_THICKNESS, boundary_size.y / 2)
+	right.shape.extents = Vector2(BOUNDARY_THICKNESS, boundary_size.y / 2)
+	
+	top.global_position = boundary_topleft + Vector2(boundary_size.x / 2, 0)
+	bottom.global_position = boundary_topleft + Vector2(boundary_size.x / 2, boundary_size.y)
+	left.global_position = boundary_topleft + Vector2(0, boundary_size.y / 2)
+	right.global_position = boundary_topleft + Vector2(boundary_size.x, boundary_size.y / 2)
 
 func _process(delta):
 	# Level hotkeys

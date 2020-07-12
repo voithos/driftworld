@@ -1,7 +1,7 @@
 # TODOs
 
 Basics:
-- Enemy AI!!!
+- Enemy AI!!!!!!
   - Defensive: just keeps all units around, but attacks those attacking it
   - Stupid: sends all new units to attack nearest non-self base immediately
   - Strategic: builds a small army first, then attacks neutral bases in order to capture
@@ -19,7 +19,6 @@ Levels:
 - Level3 (multiple enemy bases and neutral bases)
 
 Next:
-- Bounding box
 - Base health bar
 - Title screen
 - End screen
@@ -34,6 +33,7 @@ Polish:
 - UI for Unit / base counts for each player
 - Death animation
 - Spawn animation
+- Cursor animation
 - Attack particle effect
 - Unit trail animation
 - Base capture color animation
@@ -83,3 +83,4 @@ Extras:
   - Moral decay
 - Better color choices
 - Level reset button / key? (Or pause menu)
+- Bounding box

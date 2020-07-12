@@ -9,14 +9,24 @@ const ZOOM_CHANGE = 0.1
 
 var curzoom = 1.0
 
+var boundary_topleft = Vector2()
+var boundary_size = Vector2()
+
 func _ready():
 	add_to_group("camera")
+
+func set_boundary(topleft, size):
+	boundary_topleft = topleft
+	boundary_size = size
 
 func _process(delta):
 	var horizontal = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
 	var vertical = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
 	position.x = lerp(position.x, position.x + horizontal * speed * curzoom, speed * delta)
 	position.y = lerp(position.y, position.y + vertical * speed * curzoom, speed * delta)
+	
+	position.x = clamp(position.x, boundary_topleft.x, boundary_topleft.x + boundary_size.x)
+	position.y = clamp(position.y, boundary_topleft.y, boundary_topleft.y + boundary_size.y)
 	
 	zoom.x = lerp(zoom.x, curzoom, zoomspeed * delta)
 	zoom.y = lerp(zoom.y, curzoom, zoomspeed * delta)
