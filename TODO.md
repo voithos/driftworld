@@ -25,7 +25,6 @@ Next:
 - Level victory message
 - Eradication message
 - Hint messages
-- Allow selecting bases and sending their units somewhere
 
 Polish:
 - Bloom effect
@@ -86,3 +85,4 @@ Extras:
 - Bounding box
 - Come up with a name
 - Base health bar
+- Allow selecting bases and sending their units somewhere

@@ -9,6 +9,8 @@ export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 export (int) var starting_hp = 100
 var hp = starting_hp
 
+export var selected = false setget set_selected
+
 export (float) var spawn_secs = 2.0
 export (float) var spawn_ring_width = 50.0
 export (float) var regen_secs = 1.0
@@ -28,11 +30,13 @@ const HEALTHBAR_ANIM_TIME = 0.5
 
 const LASER_TOLERANCE = 10
 
+var new_units_target
+
 const unit_scene = preload("res://scenes/unit.tscn")
 
 func _ready():
 	randomize()
-	
+	$selection.hide()
 	add_to_group("bases")
 	become_type(unit_type)
 	healthbar.modulate.a = 0
@@ -51,6 +55,37 @@ func _ready():
 	regen_timer.start()
 	
 	call_deferred("setup_starting_units")
+
+func _process(delta):
+	check_hotkeys()
+
+func check_hotkeys():
+	if selected and Input.is_action_just_pressed("ui_cancel"):
+		go_idle()
+
+func _on_base_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == BUTTON_LEFT:
+				toggle_select()
+
+func toggle_select():
+	set_selected(not selected)
+
+func set_selected(value):
+	if selected != value:
+		selected = value
+		if selected:
+			add_to_group("selected")
+		else:
+			remove_from_group("selected")
+		$selection.visible = selected
+
+func go_to(pos):
+	new_units_target = pos
+
+func go_idle():
+	new_units_target = null
 
 func setup_starting_units():
 	for i in range(starting_units):
@@ -72,6 +107,10 @@ func spawn_unit():
 	unit.global_position = generate_spawn_position()
 	unit.unit_type = unit_type
 	level.add_child(unit)
+	if selected:
+		unit.set_selected(true)
+	if new_units_target != null:
+		unit.go_to(new_units_target)
 
 func generate_spawn_position():
 	var angle = randf() * PI * 2
