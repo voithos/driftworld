@@ -20,12 +20,12 @@ Levels:
 
 Next:
 - Base health bar
+- Background music
+- Sound effects
 - Title screen
 - End screen
 - Level victory message
 - Eradication message
-- Background music
-- Sound effects
 - Allow selecting bases and sending their units somewhere
 
 Polish:

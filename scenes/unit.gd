@@ -93,6 +93,11 @@ const MAX_REPEL_COUNT = 10
 func _process(delta):
 	update_laser()
 	update_morale_color()
+	check_hotkeys()
+
+func check_hotkeys():
+	if selected and Input.is_action_just_pressed("ui_cancel"):
+		go_idle()
 
 func _physics_process(delta):
 	check_arrival()
