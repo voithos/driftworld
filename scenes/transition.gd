@@ -12,8 +12,9 @@ func _ready():
 	add_child(tween)
 	tween.connect("tween_completed", self, "_on_tween_complete") 
 
-	set_cutoff(0)
-	fade_in()
+	if start_immediately:
+		set_cutoff(0)
+		fade_in()
 
 func fade_in():
 	tween.interpolate_method(self, "set_cutoff", 0.0, 1.0, DURATION)

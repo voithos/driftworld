@@ -20,7 +20,6 @@ Levels:
 Next:
 - Background music
 - Sound effects
-- Title screen
 - End screen
 
 Polish:
@@ -87,3 +86,4 @@ Extras:
 - Hint messages
 - Level victory message
 - Eradication message
+- Title screen
