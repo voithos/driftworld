@@ -1,8 +1,6 @@
 # TODOs
 
 Next:
-- Set up levels
-- Add extra morale bits
 - Enemy AI!!!!!!
   - Defensive: just keeps all units around, but attacks those attacking it
   - Stupid: sends all new units to attack nearest non-self base immediately
@@ -14,7 +12,7 @@ Next:
 - Create itch.io page
 
 Polish:
-- Fear system / fleeing?
+- Cursor animation
 - Bloom effect
 - Death animation
 - Attack particle effect
@@ -22,18 +20,18 @@ Polish:
 - Base capture color animation
 - Base capture "swoosh" effect
 - Base capture sound effect
-- Cursor animation
+- Fear system / fleeing?
 - Background space particles
 - Buildup-guage based way of base takeover?
 
 Cutting block:
 - UI for Unit / base counts for each player
 - Collision avoidance
+- Improved "arrival" logic
 - Camera edge scrolling
 - Max units (based on # of total bases, I guess)
 - Scoring system? :O
 - Save data + level selector?
-- Unit trail animation
 - Spawn animation
 
 Bugs:
@@ -84,3 +82,5 @@ Extras:
 - Title screen
 - End screen
 - Background music
+- Set up levels
+- Add extra morale bits

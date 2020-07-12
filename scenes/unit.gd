@@ -15,9 +15,12 @@ export (float) var attack_timeout = 2.0
 export (float) var laser_timeout = 0.25
 
 # Morale stuff
-export (float) var morale = 100.0
 const MAX_MORALE = 100.0
+const NEUTRAL_START_MORALE = MAX_MORALE / 2
+export (float) var morale = MAX_MORALE
+
 const MORALE_CONVERSION_THRESHOLD = 15.0
+const MAX_ATTACK_CONVERSION_CHANCE = 0.5
 
 const MORALE_BASE_GAIN = 5.0
 
@@ -29,7 +32,7 @@ const MORALE_LONELINESS_LOSS = -5.0
 
 const MORALE_OUTNUMBERED_LOSS = -10.0
 
-const MORALE_TICK_MULTIPLIER = 1.0
+const MORALE_TICK_MULTIPLIER = 0.5
 const MIN_DELTA_PER_MORALE = 0.5
 var delta_since_last_morale = MIN_DELTA_PER_MORALE
 
@@ -41,6 +44,11 @@ onready var laser_timer = Timer.new()
 var is_attacking = false
 var attacking_unit = null
 var attacking_unit_radius = 0
+
+onready var under_attack_timer = Timer.new()
+var is_under_attack = false
+var aggressor_pos = null
+export (float) var attack_memory = 2.0
 
 const LASER_TOLERANCE = 2
 
@@ -79,6 +87,8 @@ func _ready():
 	$laser.hide()
 	add_to_group("units")
 	become_type(unit_type)
+	if unit_type == colors.TYPE.NEUTRAL:
+		morale = NEUTRAL_START_MORALE
 	
 	add_child(attack_timer)
 	attack_timer.connect("timeout", self, "_on_attack_timer_timeout")
@@ -89,6 +99,10 @@ func _ready():
 	laser_timer.connect("timeout", self, "_on_laser_timer_timeout")
 	laser_timer.set_wait_time(laser_timeout)
 	laser_timer.set_one_shot(true)
+	
+	add_child(under_attack_timer)
+	under_attack_timer.connect("timeout", self, "_on_under_attack_timer_timeout")
+	under_attack_timer.set_one_shot(true)
 
 const MAX_REPEL_COUNT = 10
 
@@ -259,7 +273,7 @@ func attack_enemies(other_units):
 		attack(closest)
 
 func attack(other_unit):
-	other_unit.take_damage(attack_power, unit_type)
+	other_unit.take_damage(attack_power, unit_type, self)
 	can_attack = false
 	is_attacking = true
 	attacking_unit = other_unit
@@ -295,10 +309,29 @@ func stop_attacking():
 func _on_attack_timer_timeout():
 	can_attack = true
 
-func take_damage(damage, from_type):
+func _on_under_attack_timer_timeout():
+	clear_attacker()
+	
+func take_damage(damage, from_type, aggressor):
+	aggressor_pos = aggressor.global_position
+	is_under_attack = true
+	under_attack_timer.start(attack_memory)
+
 	hp -= damage
 	if hp <= 0:
-		die()
+		defect_or_die(from_type)
+
+func clear_attacker():
+	is_under_attack = false
+	aggressor_pos = null
+	
+func defect_or_die(from_type):
+	if from_type == colors.TYPE.DEFECTOR:
+		# Defection while dying occurs based on morale
+		if randf() < MAX_ATTACK_CONVERSION_CHANCE * (1.0 - morale / MAX_MORALE):
+			defect()
+			return
+	die()
 
 func die():
 	# TODO: Should there be some form of hitstun?

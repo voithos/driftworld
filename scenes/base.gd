@@ -16,6 +16,7 @@ export (float) var spawn_ring_width = 50.0
 export (float) var regen_secs = 1.0
 export (int) var regen_amt = 1
 export (int) var starting_units = 5
+export (float) var unit_move_speed = 100 # px/s
 
 onready var timer = Timer.new()
 onready var regen_timer = Timer.new()
@@ -45,6 +46,12 @@ var new_units_target
 const ROTATION_SPEED = 0.4
 const ROTATION_DRIFT = 0.2
 
+onready var under_attack_timer = Timer.new()
+var is_under_attack = false
+var aggressor_pos = null
+export (float) var attack_memory = 5.0
+
+
 const unit_scene = preload("res://scenes/unit.tscn")
 
 func _ready():
@@ -66,6 +73,10 @@ func _ready():
 	regen_timer.set_wait_time(regen_secs)
 	regen_timer.set_one_shot(false)
 	regen_timer.start()
+	
+	add_child(under_attack_timer)
+	under_attack_timer.connect("timeout", self, "_on_under_attack_timer_timeout")
+	under_attack_timer.set_one_shot(true)
 	
 	call_deferred("setup_starting_units")
 
@@ -131,6 +142,8 @@ func spawn_unit():
 	unit.global_position = generate_spawn_position()
 	unit.unit_type = unit_type
 	level.add_child(unit)
+	if unit_move_speed:
+		unit.MOVE_SPEED = unit_move_speed
 	if selected:
 		unit.set_selected(true)
 	if new_units_target != null:
@@ -142,10 +155,21 @@ func generate_spawn_position():
 	var ring_offset = randf() * spawn_ring_width
 	return global_position + direction * (spawn_radius + ring_offset)
 
-func take_damage(damage, from_type):
+func take_damage(damage, from_type, aggressor):
+	aggressor_pos = aggressor.global_position
+	is_under_attack = true
+	under_attack_timer.start(attack_memory)
+
 	adjust_hp(-damage)
 	if hp <= 0:
 		takeover(from_type)
+
+func clear_attacker():
+	is_under_attack = false
+	aggressor_pos = null
+
+func _on_under_attack_timer_timeout():
+	clear_attacker()
 
 func adjust_hp(change):
 	hp = min(starting_hp, hp + change)
@@ -166,6 +190,7 @@ func takeover(new_type):
 	hp = starting_hp
 	remove_from_group("bases_" + str(unit_type))
 	become_type(new_type)
+	set_selected(false)
 
 func become_type(new_type):
 	unit_type = new_type
