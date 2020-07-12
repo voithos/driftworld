@@ -20,7 +20,6 @@ Levels:
 Next:
 - Background music
 - Sound effects
-- End screen
 
 Polish:
 - Bloom effect
@@ -87,3 +86,4 @@ Extras:
 - Level victory message
 - Eradication message
 - Title screen
+- End screen
