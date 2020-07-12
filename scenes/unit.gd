@@ -65,6 +65,7 @@ const ARRIVAL_DIST_SQUARED = 15
 onready var steering = $steering
 onready var detection = $detection
 onready var attack_range = $attack_range
+onready var sprite = $sprite
 
 var current_motion = Vector2()
 var current_target = Vector2()
@@ -91,6 +92,7 @@ const MAX_REPEL_COUNT = 10
 
 func _process(delta):
 	update_laser()
+	update_morale_color()
 
 func _physics_process(delta):
 	check_arrival()
@@ -153,7 +155,16 @@ func update_morale(delta):
 
 	morale = min(morale + change, MAX_MORALE)
 	if morale <= 0:
-		defect()
+		instigate(bodies)
+
+func instigate(bodies):
+	defect()
+
+	# Infect others
+	for body in bodies:
+		if body.utype == "unit":
+			if body.unit_type == colors.TYPE.PLAYER and body.morale < MORALE_CONVERSION_THRESHOLD:
+				body.defect()
 
 func defect():
 	hp = starting_hp
@@ -166,7 +177,7 @@ func defect():
 func become_type(new_type):
 	unit_type = new_type
 	add_to_group("units_" + str(unit_type))
-	$sprite.modulate = colors.COLORS[unit_type]
+	sprite.modulate = colors.COLORS[unit_type]
 	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
 	
 	detection.monitoring = unit_type == colors.TYPE.PLAYER
@@ -218,6 +229,12 @@ func go_to(pos):
 func go_idle():
 	state = STATE.IDLE
 	current_target = null
+
+func update_morale_color():
+	if unit_type != colors.TYPE.PLAYER:
+		return
+	sprite.modulate =  colors.COLORS[unit_type].linear_interpolate(
+		colors.COLORS[colors.TYPE.DEFECTOR], 1.0 - morale / MAX_MORALE * 2)
 
 func attack_enemies(other_units):
 	if not can_attack:
