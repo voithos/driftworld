@@ -7,11 +7,22 @@ var is_dragging = false
 signal selection
 signal right_click
 signal right_click_drag
+signal message_complete
 
 var camera
+var is_showing_message = false
+
+onready var text_tween = Tween.new()
+
+const MESSAGE_ANIM_TIME = 3.0
+const MESSAGE_SHOW_TIME = 3.0
 
 func _ready():
+	add_child(text_tween)
 	add_to_group("ui")
+	$canvas/message.modulate.a = 0
+	$canvas/bigtext.modulate.a = 0
+
 	yield(get_tree(), "idle_frame")
 	camera = get_tree().get_nodes_in_group("camera")[0]
 
@@ -48,3 +59,28 @@ func draw_select_rect():
 	pos.x = min(start.x, end.x)
 	pos.y = min(start.y, end.y)
 	$canvas/select_rect.rect_position = (pos / camera.zoom) + get_viewport().size / 2 - (camera.global_position / camera.zoom)
+
+func show_message(text):
+	if is_showing_message:
+		yield(self, "message_complete")
+	is_showing_message = true
+	$canvas/message.text = text
+	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME)
+	text_tween.start()
+	yield(text_tween, "tween_completed")
+	yield(get_tree().create_timer(MESSAGE_SHOW_TIME), "timeout")
+	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), MESSAGE_ANIM_TIME)
+	text_tween.start()
+	is_showing_message = false
+	emit_signal("message_complete")
+
+func show_bigtext(text):
+	if is_showing_message:
+		yield(self, "message_complete")
+	is_showing_message = true
+	$canvas/bigtext.text = text
+	text_tween.interpolate_property($canvas/bigtext, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), MESSAGE_ANIM_TIME)
+	text_tween.start()
+	yield(text_tween, "tween_completed")
+	is_showing_message = false
+	emit_signal("message_complete")

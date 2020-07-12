@@ -2,6 +2,8 @@ extends Node2D
 
 const colors = preload("res://scripts/colors.gd")
 
+onready var hints = get_node("/root/Hints")
+
 export (String, FILE, "*.tscn") var next_level
 export (Vector2) var boundary_topleft = Vector2(-750, -750)
 export (Vector2) var boundary_size = Vector2(1500, 1500)
@@ -15,12 +17,12 @@ var is_loading = true
 var session_complete = false
 
 func _ready():
-	assert(next_level)
 	add_to_group("level")
 	create_boundary()
 	$camera.set_boundary(boundary_topleft, boundary_size)
 	yield($transition, "fade_complete")
 	is_loading = false
+	hints.show_hint($ui, "directive")
 
 const BOUNDARY_THICKNESS = 50
 

@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui.gd" type="Script" id=1]
+[ext_resource path="res://scenes/virgo_font.tres" type="DynamicFont" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://assets/virgo.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = SubResource( 1 )
 
 [node name="ui" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,6 +20,36 @@ visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 color = Color( 1, 1, 1, 0.54902 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="message" type="Label" parent="canvas"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -512.0
+margin_top = -196.0
+margin_right = 512.0
+custom_fonts/font = ExtResource( 2 )
+text = "TEST"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bigtext" type="Label" parent="canvas"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -512.0
+margin_right = 512.0
+margin_bottom = 532.0
+custom_fonts/font = SubResource( 2 )
+text = "test"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -20,11 +20,10 @@ Levels:
 Next:
 - Background music
 - Sound effects
-- Title screen
-- End screen
 - Level victory message
 - Eradication message
-- Hint messages
+- Title screen
+- End screen
 
 Polish:
 - Bloom effect
@@ -87,3 +86,4 @@ Extras:
 - Base health bar
 - Allow selecting bases and sending their units somewhere
 - Animate the bases a bit better - rotation? super tiny wander steering? both?
+- Hint messages
