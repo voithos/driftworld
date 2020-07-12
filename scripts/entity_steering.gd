@@ -34,7 +34,6 @@ func repel(target, weight=1):
 		entity.global_position, target, entity.REPEL_RADIUS,
 		entity.current_motion, entity.SPEED) * weight
 
-
 func wander(weight=1):
 	current_steering += steering.wander(
 		entity.global_position, entity.WANDER_DISTANCE, entity.WANDER_RADIUS,

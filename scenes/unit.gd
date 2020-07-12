@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 const colors = preload("res://scripts/colors.gd")
 
+var utype = "unit"
+
 export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 export var selected = false setget set_selected
 
@@ -12,7 +14,26 @@ export (int) var attack_power = 1
 export (float) var attack_timeout = 2.0
 export (float) var laser_timeout = 0.25
 
-export (float) var morale = 100
+# Morale stuff
+export (float) var morale = 100.0
+const MAX_MORALE = 100.0
+const MORALE_CONVERSION_THRESHOLD = 15.0
+
+const MORALE_BASE_GAIN = 5.0
+
+const MORALE_ATTRITION = -2.0
+const MORALE_GROUP_GAIN = 1.5
+
+const MORALE_MIN_FRIENDLIES = 10
+const MORALE_LONELINESS_LOSS = -5.0
+
+const MORALE_OUTNUMBERED_LOSS = -10.0
+
+const MORALE_TICK_MULTIPLIER = 1.0
+const MIN_DELTA_PER_MORALE = 0.5
+var delta_since_last_morale = MIN_DELTA_PER_MORALE
+
+# ------
 
 onready var attack_timer = Timer.new()
 var can_attack = true
@@ -43,6 +64,7 @@ const ARRIVAL_DIST_SQUARED = 15
 
 onready var steering = $steering
 onready var detection = $detection
+onready var attack_range = $attack_range
 
 var current_motion = Vector2()
 var current_target = Vector2()
@@ -81,20 +103,55 @@ func _physics_process(delta):
 		steering.arrive(current_target)
 		steering.wander(0.05)
 
-	var other_units = detection.get_overlapping_bodies()
+	var other_units = attack_range.get_overlapping_bodies()
 	maintain_distance(other_units)
 	attack_enemies(other_units)
-	update_morale()
+	update_morale(delta)
 
 	apply_steer()
 
-func update_morale():
+func update_morale(delta):
 	if unit_type != colors.TYPE.PLAYER:
 		return
-
-	# TODO: Add cases
-	morale -= .3
+		
+	delta_since_last_morale += delta
+	if delta_since_last_morale < MIN_DELTA_PER_MORALE:
+		return
+	delta_since_last_morale = 0.0
 	
+	var bodies = detection.get_overlapping_bodies()
+	
+	var enemies = 0
+	var friendlies = 0
+	var friendly_bases = 0
+	
+	for body in bodies:
+		if body.utype == "base":
+			if body.unit_type == unit_type:
+				friendly_bases += 1
+		else:
+			if body.unit_type == unit_type:
+				friendlies += 1
+			else:
+				enemies += 1
+
+	# Case 1: Proximity to a friendly base. If so, then all other morale drains are void.
+	var change = MORALE_BASE_GAIN
+	if friendly_bases == 0:
+		# Otherwise, there is drain. Maybe a lot of it.
+		change = MORALE_ATTRITION
+
+		# Case 2: Sufficient nearby friendlies
+		if friendlies < MORALE_MIN_FRIENDLIES:
+			change += MORALE_LONELINESS_LOSS * (1.0 - friendlies / float(MORALE_MIN_FRIENDLIES))
+		else:
+			change += MORALE_GROUP_GAIN
+		
+		# Case 3: Not outnumbered
+		if friendlies < enemies:
+			change += MORALE_OUTNUMBERED_LOSS * (1.0 - friendlies / float(enemies))
+
+	morale = min(morale + change, MAX_MORALE)
 	if morale <= 0:
 		defect()
 
@@ -103,12 +160,16 @@ func defect():
 	remove_from_group("units_" + str(unit_type))
 	become_type(colors.TYPE.DEFECTOR)
 	set_selected(false)
+	# TODO: Fix motion jankiness
+	#go_idle()
 
 func become_type(new_type):
 	unit_type = new_type
 	add_to_group("units_" + str(unit_type))
 	$sprite.modulate = colors.COLORS[unit_type]
 	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
+	
+	detection.monitoring = unit_type == colors.TYPE.PLAYER
 
 func maintain_distance(other_units):
 	# Maintain distance from other units.
@@ -130,7 +191,7 @@ func apply_steer():
 func check_arrival():
 	if state == STATE.MOVE:
 		if global_position.distance_squared_to(current_target) < ARRIVAL_DIST_SQUARED:
-			state = STATE.IDLE
+			go_idle()
 
 func _on_unit_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
@@ -153,6 +214,10 @@ func set_selected(value):
 func go_to(pos):
 	state = STATE.MOVE
 	current_target = pos
+	
+func go_idle():
+	state = STATE.IDLE
+	current_target = null
 
 func attack_enemies(other_units):
 	if not can_attack:

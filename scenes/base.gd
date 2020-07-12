@@ -1,6 +1,8 @@
-extends StaticBody2D
+extends KinematicBody2D
 
 const colors = preload("res://scripts/colors.gd")
+
+var utype = "base"
 
 export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 
@@ -17,6 +19,8 @@ onready var timer = Timer.new()
 onready var regen_timer = Timer.new()
 onready var level = get_parent()
 onready var spawn_radius = $shape.shape.radius
+
+onready var detection = $detection
 
 const unit_scene = preload("res://scenes/unit.tscn")
 

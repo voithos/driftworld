@@ -10,9 +10,6 @@ Basics:
       - if base under attack, will redirect units to defend
 
 Important:
-- Morale system
-  - Defection
-  - Moral decay
 - Come up with a name
 - Playtesting
 
@@ -22,6 +19,7 @@ Levels:
 - Level3 (multiple enemy bases and neutral bases)
 
 Next:
+- Bounding box
 - Base health bar
 - Title screen
 - End screen
@@ -49,6 +47,10 @@ Polish:
 - Collision avoidance
 - Change default clear color subtly depending on who has the most units?
 - Buildup-guage based way of base takeover?
+- Scoring system? :O
+
+Bugs:
+- Fix motion jankiness when becoming defector
 
 Extras:
 - Towers
@@ -78,3 +80,6 @@ Extras:
 - Base capture
 - Eradication / game over / level won
 - Level transitions
+- Morale system
+  - Defection
+  - Moral decay
