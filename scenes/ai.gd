@@ -81,10 +81,14 @@ func aggression(units, bases):
 
 		# Go on the offensive
 		if not under_attack:
-			var close = get_close_bases(enemy_bases, b.global_position)
-			var rand_base = pick_random(close)
-			if rand_base:
-				prob_go_to(base_units, rand_base.global_position, 0.5)
+			if b.ai_target_base == null or b.ai_target_base.unit_type == unit_type:
+				# No target, or target has been captured
+				var close = get_close_bases(enemy_bases, b.global_position)
+				var rand_base = pick_random(close)
+				if rand_base:
+					b.ai_target_base = rand_base
+			if b.ai_target_base:
+				prob_go_to(base_units, b.ai_target_base.global_position, 0.5)
 	
 	# If you have no bases, just attack
 	if len(bases) == 0:
@@ -104,7 +108,7 @@ func pick_random(arr):
 		return arr[randi() % arr.size()]
 	return null
 
-const CLOSENESS_THRESHOLD = 300
+const CLOSENESS_THRESHOLD = 500*500
 func get_close_bases(bases, from_pos):
 	var closest = null
 	var closest_dist = -1
@@ -118,8 +122,9 @@ func get_close_bases(bases, from_pos):
 		return []
 	var res = [closest]
 	for b in bases:
-		if from_pos.distance_squared_to(b.global_position) - closest_dist < CLOSENESS_THRESHOLD:
-			res.append(b)
+		if b != closest:
+			if from_pos.distance_squared_to(b.global_position) - closest_dist < CLOSENESS_THRESHOLD:
+				res.append(b)
 	return res
 
 func get_enemy_bases():

@@ -7,7 +7,7 @@ const hints = {
 	"drifters": ["but be cautious", "lest they turn against you"],
 	"patience": ["take your time", "do not let the drifters oppose you"],
 	"resist": ["the drifters", "they resist you"],
-	"end": ["the enemy is no more", "yet the drifters struggle", "you must end this"],
+	"end": ["the enemy is no more", "yet the drifters defy you", "you must end this"],
 }
 
 var seen = {}

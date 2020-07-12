@@ -52,6 +52,7 @@ var is_under_attack = false
 var aggressor_pos = null
 export (float) var attack_memory = 5.0
 
+var ai_target_base = null
 
 const unit_scene = preload("res://scenes/unit.tscn")
 
@@ -192,6 +193,7 @@ func takeover(new_type):
 	remove_from_group("bases_" + str(unit_type))
 	become_type(new_type)
 	set_selected(false)
+	ai_target_base = null
 
 func become_type(new_type):
 	unit_type = new_type

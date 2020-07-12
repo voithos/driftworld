@@ -32,7 +32,7 @@ const MORALE_LONELINESS_LOSS = -5.0
 
 const MORALE_OUTNUMBERED_LOSS = -10.0
 
-const MORALE_TICK_MULTIPLIER = 0.5
+const MORALE_TICK_MULTIPLIER = 0.75
 const MIN_DELTA_PER_MORALE = 0.5
 var delta_since_last_morale = MIN_DELTA_PER_MORALE
 
@@ -124,10 +124,8 @@ func _physics_process(delta):
 	check_arrival()
 	
 	if state == STATE.IDLE:
-		set_speed(WANDER_SPEED)
 		steering.wander(0.5)
 	elif state == STATE.MOVE:
-		set_speed(MOVE_SPEED)
 		steering.arrive(current_target)
 		steering.wander(0.05)
 
@@ -254,10 +252,12 @@ func set_selected(value):
 
 func go_to(pos):
 	state = STATE.MOVE
+	set_speed(MOVE_SPEED)
 	current_target = pos
 	
 func go_idle():
 	state = STATE.IDLE
+	set_speed(WANDER_SPEED)
 	current_target = null
 
 func update_morale_color():
