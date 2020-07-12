@@ -13,4 +13,5 @@ func show_hint(ui, key):
 		return
 	for text in hints[key]:
 		ui.show_message(text)
+		yield(ui, "message_complete")
 	seen[key] = true

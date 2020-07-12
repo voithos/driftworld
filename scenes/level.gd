@@ -70,6 +70,8 @@ func check_end_state():
 	if player_units == 0 and player_bases == 0:
 		session_complete = true
 		emit_signal("eradicated")
+		$ui.show_bigtext("ERADICATED")
+		yield($ui, "message_complete")
 		reset_level()
 	
 	# Check for victory. We only care about bases.
@@ -78,6 +80,8 @@ func check_end_state():
 	if enemy_bases == 0:
 		session_complete = true
 		emit_signal("victorious")
+		$ui.show_bigtext("VICTORIOUS")
+		yield($ui, "message_complete")
 		load_next_level()
 
 func _on_ui_selection(start, end):

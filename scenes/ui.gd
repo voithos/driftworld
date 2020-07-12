@@ -71,6 +71,7 @@ func show_message(text):
 	yield(get_tree().create_timer(MESSAGE_SHOW_TIME), "timeout")
 	text_tween.interpolate_property($canvas/message, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), MESSAGE_ANIM_TIME)
 	text_tween.start()
+	yield(text_tween, "tween_completed")
 	is_showing_message = false
 	emit_signal("message_complete")
 

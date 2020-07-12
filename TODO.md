@@ -20,8 +20,6 @@ Levels:
 Next:
 - Background music
 - Sound effects
-- Level victory message
-- Eradication message
 - Title screen
 - End screen
 
@@ -87,3 +85,5 @@ Extras:
 - Allow selecting bases and sending their units somewhere
 - Animate the bases a bit better - rotation? super tiny wander steering? both?
 - Hint messages
+- Level victory message
+- Eradication message
