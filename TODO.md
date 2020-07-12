@@ -30,7 +30,6 @@ Next:
 - Allow selecting bases and sending their units somewhere
 
 Polish:
-- Better color choices
 - Bloom effect
 - UI for Unit / base counts for each player
 - Death animation
@@ -39,7 +38,6 @@ Polish:
 - Unit trail animation
 - Base capture color animation
 - Base capture "swoosh" effect
-- Level reset button / key? (Or pause menu)
 - Background space particles
 - Camera edge scrolling
 - Animate the bases a bit better - rotation? super tiny wander steering? both?
@@ -83,3 +81,5 @@ Extras:
 - Morale system
   - Defection
   - Moral decay
+- Better color choices
+- Level reset button / key? (Or pause menu)

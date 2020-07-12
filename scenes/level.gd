@@ -7,11 +7,19 @@ export (String, FILE, "*.tscn") var next_level
 signal eradicated
 signal victorious
 
+var is_loading = true
 var session_complete = false
 
 func _ready():
 	assert(next_level)
 	add_to_group("level")
+	yield($transition, "fade_complete")
+	is_loading = false
+
+func _process(delta):
+	# Level hotkeys
+	if not is_loading and Input.is_action_just_pressed("ui_reset"):
+		reset_level()
 
 func _physics_process(delta):
 	check_end_state()
@@ -56,11 +64,13 @@ func move_selected(pos):
 		unit.go_to(pos)
 
 func load_next_level():
+	is_loading = true
 	$transition.fade_out()
 	yield($transition, "fade_complete")
 	get_tree().change_scene(next_level)
 
 func reset_level():
+	is_loading = true
 	$transition.fade_out()
 	yield($transition, "fade_complete")
 	get_tree().reload_current_scene()
