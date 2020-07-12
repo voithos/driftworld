@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/level.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level3.gd" type="Script" id=2]
 [ext_resource path="res://scenes/base.tscn" type="PackedScene" id=3]
 
 [node name="level3" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="level" parent="." instance=ExtResource( 1 )]
 next_level = "res://scenes/level4.tscn"

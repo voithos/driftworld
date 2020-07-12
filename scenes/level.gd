@@ -77,9 +77,9 @@ func check_end_state():
 	var tree = get_tree()
 
 	# Check for player defeat
-	var player_units = len(tree.get_nodes_in_group("units_" + str(colors.TYPE.PLAYER)))
-	var player_bases = len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.PLAYER)))
-	if player_units == 0 and player_bases == 0:
+	var player_pieces = (len(tree.get_nodes_in_group("units_" + str(colors.TYPE.PLAYER))) +
+	                     len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.PLAYER))))
+	if player_pieces == 0:
 		defeat()
 	
 	# Check for victory. We only care about bases.
