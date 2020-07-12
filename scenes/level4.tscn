@@ -3,10 +3,10 @@
 [ext_resource path="res://scenes/level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/base.tscn" type="PackedScene" id=3]
 
-[node name="level2" type="Node2D"]
+[node name="level4" type="Node2D"]
 
 [node name="level" parent="." instance=ExtResource( 1 )]
-next_level = "res://scenes/level3.tscn"
+next_level = "res://scenes/level5.tscn"
 boundary_topleft = Vector2( -1000, -1000 )
 boundary_size = Vector2( 4500, 2000 )
 

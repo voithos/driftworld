@@ -58,6 +58,15 @@ func _process(delta):
 	# Level hotkeys
 	if not is_loading and Input.is_action_just_pressed("ui_reset"):
 		reset_level()
+	
+func _input(event):
+	# Debug keys
+	if OS.is_debug_build():
+		if event is InputEventKey and event.is_pressed():
+			if event.scancode == KEY_V:
+				victory()
+			if event.scancode == KEY_B:
+				defeat()
 
 func _physics_process(delta):
 	check_end_state()
@@ -71,21 +80,27 @@ func check_end_state():
 	var player_units = len(tree.get_nodes_in_group("units_" + str(colors.TYPE.PLAYER)))
 	var player_bases = len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.PLAYER)))
 	if player_units == 0 and player_bases == 0:
-		session_complete = true
-		emit_signal("eradicated")
-		$ui.show_bigtext("ERADICATED")
-		yield($ui, "message_complete")
-		reset_level()
+		defeat()
 	
 	# Check for victory. We only care about bases.
 	var enemy_bases = (len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.ENEMY))) + 
 	                   len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.DEFECTOR))))
 	if enemy_bases == 0:
-		session_complete = true
-		emit_signal("victorious")
-		$ui.show_bigtext("VICTORIOUS")
-		yield($ui, "message_complete")
-		load_next_level()
+		victory()
+
+func victory():
+	session_complete = true
+	emit_signal("victorious")
+	$ui.show_bigtext("VICTORIOUS")
+	yield($ui, "message_complete")
+	load_next_level()
+
+func defeat():
+	session_complete = true
+	emit_signal("eradicated")
+	$ui.show_bigtext("ERADICATED")
+	yield($ui, "message_complete")
+	reset_level()
 
 func _on_ui_selection(start, end):
 	var topleft = Vector2(min(start.x, end.x), min(start.y, end.y))
