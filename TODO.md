@@ -10,7 +10,6 @@ Basics:
       - if base under attack, will redirect units to defend
 
 Important:
-- Come up with a name
 - Playtesting
 
 Levels:
@@ -19,13 +18,13 @@ Levels:
 - Level3 (multiple enemy bases and neutral bases)
 
 Next:
-- Base health bar
 - Background music
 - Sound effects
 - Title screen
 - End screen
 - Level victory message
 - Eradication message
+- Hint messages
 - Allow selecting bases and sending their units somewhere
 
 Polish:
@@ -46,6 +45,7 @@ Polish:
 - Change default clear color subtly depending on who has the most units?
 - Buildup-guage based way of base takeover?
 - Scoring system? :O
+- Save data + level selector?
 
 Bugs:
 - Fix motion jankiness when becoming defector
@@ -84,3 +84,5 @@ Extras:
 - Better color choices
 - Level reset button / key? (Or pause menu)
 - Bounding box
+- Come up with a name
+- Base health bar

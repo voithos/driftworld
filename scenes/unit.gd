@@ -42,6 +42,8 @@ var is_attacking = false
 var attacking_unit = null
 var attacking_unit_radius = 0
 
+const LASER_TOLERANCE = 2
+
 enum STATE {
 	IDLE,
 	MOVE,
@@ -261,7 +263,7 @@ func attack(other_unit):
 	can_attack = false
 	is_attacking = true
 	attacking_unit = other_unit
-	attacking_unit_radius = other_unit.get_node("shape").shape.radius
+	attacking_unit_radius = other_unit.get_node("shape").shape.radius - other_unit.LASER_TOLERANCE
 	attack_timer.start()
 	shoot_laser()
 
@@ -269,8 +271,6 @@ func shoot_laser():
 	laser.show()
 	update_laser()
 	laser_timer.start()
-
-const laser_tolerance = 2
 
 func update_laser():
 	if is_attacking:
@@ -280,7 +280,7 @@ func update_laser():
 			return
 
 		laser.look_at(attacking_unit.global_position)
-		var dist = global_position.distance_to(attacking_unit.global_position) - attacking_unit_radius + laser_tolerance
+		var dist = global_position.distance_to(attacking_unit.global_position) - attacking_unit_radius
 		laser.region_rect.end.x = dist / laser.scale.x
 
 func _on_laser_timer_timeout():

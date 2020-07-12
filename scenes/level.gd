@@ -71,7 +71,8 @@ func check_end_state():
 		reset_level()
 	
 	# Check for victory. We only care about bases.
-	var enemy_bases = len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.ENEMY)))
+	var enemy_bases = (len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.ENEMY))) + 
+	                   len(tree.get_nodes_in_group("bases_" + str(colors.TYPE.DEFECTOR))))
 	if enemy_bases == 0:
 		session_complete = true
 		emit_signal("victorious")
