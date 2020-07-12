@@ -7,16 +7,25 @@
 
 [node name="level" parent="." instance=ExtResource( 1 )]
 next_level = "res://scenes/endscreen.tscn"
-boundary_topleft = Vector2( -1000, -1000 )
-boundary_size = Vector2( 4500, 2000 )
+boundary_topleft = Vector2( -1750, -1750 )
+boundary_size = Vector2( 3500, 3500 )
 
 [node name="base" parent="level" instance=ExtResource( 3 )]
 position = Vector2( -2.61319, 16.2816 )
 unit_type = 0
 
 [node name="base2" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 2366.68, 2.55591 )
-unit_type = 1
+position = Vector2( 1319.93, -1.68188 )
+unit_type = 3
+
+[node name="base5" parent="level" instance=ExtResource( 3 )]
+position = Vector2( -1180.4, 6.7937 )
+unit_type = 3
 
 [node name="base3" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 1163.13, 6.7937 )
+position = Vector2( 1.96057, -989.1 )
+starting_units = 25
+
+[node name="base4" parent="level" instance=ExtResource( 3 )]
+position = Vector2( -6.51526, 1134.06 )
+starting_units = 25
