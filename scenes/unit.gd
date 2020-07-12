@@ -53,6 +53,8 @@ export (float) var attack_memory = 2.0
 
 const LASER_TOLERANCE = 2
 
+var is_alive = true
+
 enum STATE {
 	IDLE,
 	MOVE,
@@ -197,7 +199,8 @@ func instigate(bodies):
 				body.defect()
 
 func defect():
-	hp = starting_hp
+	# Defected units are stronger than normal
+	hp = starting_hp * 3
 	remove_from_group("units_" + str(unit_type))
 	become_type(colors.TYPE.DEFECTOR)
 	set_selected(false)
@@ -274,7 +277,7 @@ func attack_enemies(other_units):
 	var closest = null
 	var closest_dist = null
 	for unit in other_units:
-		if unit.unit_type != unit_type and not (unit.unit_type in colors.ALLIES[unit_type]) and unit.hp > 0:
+		if unit.unit_type != unit_type and not (unit.unit_type in colors.ALLIES[unit_type]) and unit.is_alive:
 			var dist = global_position.distance_squared_to(unit.global_position)
 			if closest == null or dist < closest_dist:
 				closest = unit
@@ -348,6 +351,7 @@ func defect_or_die(from_type):
 	return true
 
 func die():
+	is_alive = false
 	# TODO: Should there be some form of hitstun?
 	yield(get_tree(), "idle_frame")
 	queue_free()

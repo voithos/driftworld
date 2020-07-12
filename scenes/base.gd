@@ -6,8 +6,10 @@ var utype = "base"
 
 export (colors.TYPE) var unit_type = colors.TYPE.NEUTRAL
 
-export (int) var starting_hp = 100
+export (int) var starting_hp = 150
 var hp = starting_hp
+export (int) var takeover_buildup = 100
+var buildup_type = null
 
 export var selected = false setget set_selected
 
@@ -52,9 +54,13 @@ var is_under_attack = false
 var aggressor_pos = null
 export (float) var attack_memory = 5.0
 
+var is_alive = true
+var target_color = null
+
 var ai_target_base = null
 var ai_staging_time_left = 0
 
+const SPRITE_ANIM_TIME = 1.0
 const unit_scene = preload("res://scenes/unit.tscn")
 
 func _ready():
@@ -62,8 +68,13 @@ func _ready():
 	$selection.hide()
 	add_to_group("bases")
 	become_type(unit_type)
+	$sprite.modulate = target_color
 	healthbar.modulate.a = 0
 	add_child(healthbar_tween)
+	
+	if unit_type == colors.TYPE.NEUTRAL:
+		# Neutrals work differently
+		hp = 0
 	
 	add_child(timer)
 	timer.connect("timeout", self, "_on_timer_timeout")
@@ -138,7 +149,8 @@ func _on_regen_timer_timeout():
 	regen()
 
 func regen():
-	adjust_hp(regen_amt)
+	var amt = -regen_amt if unit_type == colors.TYPE.NEUTRAL else regen_amt
+	adjust_hp(amt)
 
 func spawn_unit():
 	var unit = unit_scene.instance()
@@ -159,13 +171,28 @@ func generate_spawn_position():
 	return global_position + direction * (spawn_radius + ring_offset)
 
 func take_damage(damage, from_type, aggressor):
-	aggressor_pos = aggressor.global_position
-	is_under_attack = true
-	under_attack_timer.start(attack_memory)
+	if aggressor != self:
+		aggressor_pos = aggressor.global_position
+		is_under_attack = true
+		under_attack_timer.start(attack_memory)
 
-	adjust_hp(-damage)
+	var d = -damage
+	if unit_type == colors.TYPE.NEUTRAL and buildup_type == from_type:
+		d = damage
+	
+	adjust_hp(d)
 	if hp <= 0:
-		takeover(from_type)
+		# Switch to buildup
+		hp = -hp
+		buildup_type = from_type
+		takeover(colors.TYPE.NEUTRAL)
+		adjust_hp(0) # To fix the healthbar
+	if unit_type == colors.TYPE.NEUTRAL and hp >= takeover_buildup:
+		# Get taken over
+		hp = starting_hp
+		takeover(buildup_type)
+		buildup_type = null
+		adjust_hp(0) # To fix the healthbar
 
 func clear_attacker():
 	is_under_attack = false
@@ -175,22 +202,39 @@ func _on_under_attack_timer_timeout():
 	clear_attacker()
 
 func adjust_hp(change):
-	hp = min(starting_hp, hp + change)
-	healthbar.value = max(0, hp / float(starting_hp)) * 100
+	var max_hp = starting_hp
+	if unit_type == colors.TYPE.NEUTRAL:
+		max_hp = takeover_buildup
 
-	if hp < starting_hp and not healthbar_shown:
+	hp = min(max_hp, hp + change)
+	var ratio = max(0, hp / float(max_hp))
+	healthbar.value = ratio * 100
+	
+	if unit_type == colors.TYPE.NEUTRAL and buildup_type != null:
+		target_color = colors.COLORS[unit_type].darkened(0.15).linear_interpolate(
+			colors.COLORS[buildup_type].darkened(0.15), ratio / 2)
+
+	var needs_to_be_shown = hp < max_hp
+	if unit_type == colors.TYPE.NEUTRAL:
+		needs_to_be_shown = hp > 0
+	
+	if needs_to_be_shown and not healthbar_shown:
 		healthbar_shown = true
 		healthbar_tween.stop_all()
 		healthbar_tween.interpolate_property(healthbar, "modulate", healthbar.modulate, Color(1, 1, 1, 1), HEALTHBAR_ANIM_TIME)
+		healthbar_tween.interpolate_property(sprite, "modulate", sprite.modulate, target_color, SPRITE_ANIM_TIME, Tween.TRANS_SINE)
 		healthbar_tween.start()
-	elif hp == starting_hp and healthbar_shown:
+	elif not needs_to_be_shown and healthbar_shown:
 		healthbar_shown = false
 		healthbar_tween.stop_all()
 		healthbar_tween.interpolate_property(healthbar, "modulate", healthbar.modulate, Color(1, 1, 1, 0.0), HEALTHBAR_ANIM_TIME)
+		healthbar_tween.interpolate_property(sprite, "modulate", sprite.modulate, target_color, SPRITE_ANIM_TIME, Tween.TRANS_SINE)
+		healthbar_tween.start()
+	else:
+		healthbar_tween.interpolate_property(sprite, "modulate", sprite.modulate, target_color, SPRITE_ANIM_TIME, Tween.TRANS_SINE)
 		healthbar_tween.start()
 
 func takeover(new_type):
-	hp = starting_hp
 	remove_from_group("bases_" + str(unit_type))
 	become_type(new_type)
 	set_selected(false)
@@ -200,4 +244,4 @@ func takeover(new_type):
 func become_type(new_type):
 	unit_type = new_type
 	add_to_group("bases_" + str(unit_type))
-	$sprite.modulate = colors.COLORS[unit_type].darkened(0.15)
+	target_color = colors.COLORS[unit_type].darkened(0.15)

@@ -2,21 +2,19 @@
 
 Next:
 - Playtest / balance
-- Create itch.io page
 
 Polish:
 - Bloom effect
 - Death animation
 - Attack particle effect
 - Attack / death sound effects
-- Base capture color animation
 - Base capture "swoosh" effect
 - Base capture sound effect
-- Fear system / fleeing?
 - Background space particles
 - Buildup-guage based way of base takeover?
 
 Cutting block:
+- Fear system / fleeing?
 - UI for Unit / base counts for each player
 - Collision avoidance
 - Improved "arrival" logic
@@ -83,3 +81,5 @@ Extras:
       - if army is dying, will attempt to flee
       - if base under attack, will redirect units to defend
 - Cursor animation
+- Base capture color animation
+- Create itch.io page
