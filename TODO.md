@@ -2,7 +2,6 @@
 
 Next:
 - Enemy AI!!!!!!
-  - Defensive: just keeps all units around, but attacks those attacking it
   - Stupid: sends all new units to attack nearest non-self base immediately
   - Strategic: builds a small army first, then attacks neutral bases in order to capture
       - leaves some behind to defend
@@ -35,7 +34,6 @@ Cutting block:
 - Spawn animation
 
 Bugs:
-- Fix motion jankiness when becoming defector
 - HP bar is sometimes below units
 
 Extras:
@@ -84,3 +82,4 @@ Extras:
 - Background music
 - Set up levels
 - Add extra morale bits
+- Defensive: just keeps all units around, but attacks those attacking it

@@ -16,6 +16,7 @@ var delta_since_tick = 0.0
 
 func _ready():
 	assert(unit_type != colors.TYPE.PLAYER)
+	randomize()
 
 func _physics_process(delta):
 	delta_since_tick += delta
@@ -36,11 +37,27 @@ func think():
 
 func defense(units, bases):
 	var divided = divide_units(units, bases)
-	for base_units in divided:
+	
+	for i in range(len(bases)):
+		var b = bases[i]
+		var base_units = divided[i]
+
+		# Prioritize base defense
+		if b.is_under_attack:
+			prob_go_to(base_units, b.aggressor_pos, 0.8)
+			continue
+
+		var under_attack = false
 		for unit in base_units:
 			if unit.is_under_attack:
-				all_go_to(base_units, unit.aggressor_pos)
+				prob_go_to(base_units, unit.aggressor_pos, 0.5)
+				under_attack = true
 				break
+
+		# Return to base
+		if not under_attack:
+			prob_go_to(base_units, b.global_position, 0.5)
+			idle_if_close_to_base(base_units, b.global_position, 1)
 
 func aggression(units, bases):
 	pass
@@ -50,9 +67,18 @@ func balanced(units, bases):
 
 ## Helpers
 	
-func all_go_to(units, pos):
+func prob_go_to(units, pos, prob):
 	for u in units:
-		u.go_to(pos)
+		if randf() < prob:
+			u.go_to(pos)
+
+const IDLE_DISTANCE_SQUARED = 200*200
+
+func idle_if_close_to_base(units, pos, prob):
+	for u in units:
+		print(u.global_position.distance_squared_to(pos))
+		if u.global_position.distance_squared_to(pos) <= IDLE_DISTANCE_SQUARED and randf() < prob:
+			u.go_idle()
 
 func divide_units(units, bases):
 	# Divide units into groups based on the bases they are closest to

@@ -44,4 +44,5 @@ func steer():
 	var motion = steering.steer(current_steering, entity.current_motion, entity.SPEED, entity.STEERING_FORCE, entity.MASS)
 	current_steering.x = 0
 	current_steering.y = 0
+	
 	return motion

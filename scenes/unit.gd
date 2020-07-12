@@ -61,14 +61,17 @@ var state = STATE.IDLE
 # Steering
 export (float) var MOVE_SPEED = 100 # Pixels/second
 export (float) var WANDER_SPEED = 10 # Pixels/second
-export (float) var ARRIVE_RADIUS = 75
+export (float) var DEFAULT_ARRIVE_RADIUS = 75
 export (float) var REPEL_RADIUS = 20
 export (float) var STEERING_FORCE = 10
 export (float) var MASS = 2
 export (float) var WANDER_DISTANCE = 100
-export (float) var WANDER_RADIUS = 200
+export (float) var WANDER_RADIUS = 100
 export (float) var WANDER_ANGLE_CHANGE = .5 # Radians
 var SPEED = WANDER_SPEED
+var ARRIVE_RADIUS = DEFAULT_ARRIVE_RADIUS
+
+const SPEED_ADJUST_TIME = 0.5
 
 const ARRIVAL_DIST_SQUARED = 15
 
@@ -81,8 +84,10 @@ var current_motion = Vector2()
 var current_target = Vector2()
 
 onready var laser = $laser
+onready var tween = Tween.new()
 
 func _ready():
+	add_child(tween)
 	$selection.hide()
 	$laser.hide()
 	add_to_group("units")
@@ -119,10 +124,10 @@ func _physics_process(delta):
 	check_arrival()
 	
 	if state == STATE.IDLE:
-		SPEED = WANDER_SPEED
+		set_speed(WANDER_SPEED)
 		steering.wander(0.5)
 	elif state == STATE.MOVE:
-		SPEED = MOVE_SPEED
+		set_speed(MOVE_SPEED)
 		steering.arrive(current_target)
 		steering.wander(0.05)
 
@@ -132,6 +137,11 @@ func _physics_process(delta):
 	update_morale(delta)
 
 	apply_steer()
+
+func set_speed(target_speed):
+	tween.stop_all()
+	tween.interpolate_property(self, "SPEED", SPEED, target_speed, SPEED_ADJUST_TIME)
+	tween.start()
 
 func update_morale(delta):
 	if unit_type != colors.TYPE.PLAYER:
@@ -192,8 +202,7 @@ func defect():
 	remove_from_group("units_" + str(unit_type))
 	become_type(colors.TYPE.DEFECTOR)
 	set_selected(false)
-	# TODO: Fix motion jankiness
-	#go_idle()
+	go_idle()
 
 func become_type(new_type):
 	unit_type = new_type

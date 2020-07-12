@@ -11,6 +11,7 @@ var hp = starting_hp
 
 export var selected = false setget set_selected
 
+export (bool) var spawning = true
 export (float) var spawn_secs = 2.0
 export (float) var spawn_ring_width = 50.0
 export (float) var regen_secs = 1.0
@@ -128,7 +129,7 @@ func setup_starting_units():
 
 func _on_timer_timeout():
 	# Don't generate units for neutral
-	if unit_type != colors.TYPE.NEUTRAL:
+	if unit_type != colors.TYPE.NEUTRAL and spawning:
 		spawn_unit()
 
 func _on_regen_timer_timeout():
