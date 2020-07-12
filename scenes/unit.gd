@@ -16,11 +16,12 @@ export (float) var laser_timeout = 0.25
 
 # Morale stuff
 const MAX_MORALE = 100.0
-const NEUTRAL_START_MORALE = MAX_MORALE / 2
+const NEUTRAL_START_MORALE = 10
 export (float) var morale = MAX_MORALE
 
 const MORALE_CONVERSION_THRESHOLD = 15.0
 const MAX_ATTACK_CONVERSION_CHANCE = 0.5
+const KILL_MORALE_LOSS = -5.0
 
 const MORALE_BASE_GAIN = 5.0
 
@@ -182,7 +183,7 @@ func update_morale(delta):
 		if friendlies < enemies:
 			change += MORALE_OUTNUMBERED_LOSS * (1.0 - friendlies / float(enemies))
 
-	morale = min(morale + change, MAX_MORALE)
+	morale = min(morale + change * MORALE_TICK_MULTIPLIER, MAX_MORALE)
 	if morale <= 0:
 		instigate(bodies)
 
@@ -282,7 +283,9 @@ func attack_enemies(other_units):
 		attack(closest)
 
 func attack(other_unit):
-	other_unit.take_damage(attack_power, unit_type, self)
+	var died = other_unit.take_damage(attack_power, unit_type, self)
+	if died:
+		morale += KILL_MORALE_LOSS
 	can_attack = false
 	is_attacking = true
 	attacking_unit = other_unit
@@ -328,7 +331,8 @@ func take_damage(damage, from_type, aggressor):
 
 	hp -= damage
 	if hp <= 0:
-		defect_or_die(from_type)
+		return defect_or_die(from_type)
+	return false
 
 func clear_attacker():
 	is_under_attack = false
@@ -339,8 +343,9 @@ func defect_or_die(from_type):
 		# Defection while dying occurs based on morale
 		if randf() < MAX_ATTACK_CONVERSION_CHANCE * (1.0 - morale / MAX_MORALE):
 			defect()
-			return
+			return false
 	die()
+	return true
 
 func die():
 	# TODO: Should there be some form of hitstun?
