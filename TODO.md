@@ -1,28 +1,28 @@
 # TODOs
 
 Next:
-- Playtest / balance
-
-Polish:
 - Bloom effect
 - Death animation
 - Attack particle effect
-- Attack / death sound effects
 - Base capture "swoosh" effect
 - Base capture sound effect
 - Background space particles
-- Buildup-guage based way of base takeover?
+- More interesting morale effects
+  - "Poisonous units"?
+- More levels / playtest / balance
+- Collision avoidance
+- Camera edge scrolling
+- Max units (based on # of total bases, I guess)
+- Spawn animation
+- Performance improvements
+- Save data + level selector?
 
 Cutting block:
 - Fear system / fleeing?
 - UI for Unit / base counts for each player
-- Collision avoidance
 - Improved "arrival" logic
-- Camera edge scrolling
-- Max units (based on # of total bases, I guess)
 - Scoring system? :O
-- Save data + level selector?
-- Spawn animation
+- Attack / death sound effects
 
 Bugs:
 - HP bar is sometimes below units
@@ -33,6 +33,7 @@ Extras:
 - Tower attacks
   - AOE?
 - More unit / base types!
+- Walls?
 
 ## Done
 
@@ -83,3 +84,4 @@ Extras:
 - Cursor animation
 - Base capture color animation
 - Create itch.io page
+- Buildup-guage based way of base takeover?

@@ -3,7 +3,9 @@
 [sub_resource type="ProceduralSky" id=1]
 
 [resource]
-background_mode = 2
+background_mode = 4
 background_sky = SubResource( 1 )
 glow_enabled = true
-glow_bloom = 0.44
+glow_intensity = 2.81
+glow_bloom = 0.19
+glow_bicubic_upscale = true

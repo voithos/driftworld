@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/transition.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ui.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/camera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level.gd" type="Script" id=4]
 [ext_resource path="res://assets/selection.png" type="Texture" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=6]
 
 [node name="level" type="Node2D"]
 script = ExtResource( 4 )
@@ -20,6 +21,9 @@ script = ExtResource( 4 )
 [node name="goto" type="Sprite" parent="."]
 z_index = 1
 texture = ExtResource( 5 )
+
+[node name="world" type="WorldEnvironment" parent="."]
+environment = ExtResource( 6 )
 [connection signal="right_click" from="ui" to="." method="_on_ui_right_click"]
 [connection signal="right_click_drag" from="ui" to="." method="_on_ui_right_click_drag"]
 [connection signal="selection" from="ui" to="." method="_on_ui_selection"]
