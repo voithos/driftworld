@@ -82,6 +82,7 @@ onready var steering = $steering
 onready var detection = $detection
 onready var attack_range = $attack_range
 onready var sprite = $sprite
+onready var damage_particles = $damage_particles
 
 var current_motion = Vector2()
 var current_target = Vector2()
@@ -93,6 +94,8 @@ func _ready():
 	add_child(tween)
 	$selection.hide()
 	$laser.hide()
+	damage_particles.emitting = false
+	damage_particles.one_shot = true
 	add_to_group("units")
 	become_type(unit_type)
 	if unit_type == colors.TYPE.NEUTRAL:
@@ -211,6 +214,7 @@ func become_type(new_type):
 	add_to_group("units_" + str(unit_type))
 	sprite.modulate = colors.COLORS[unit_type]
 	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
+	damage_particles.modulate = colors.COLORS[unit_type].lightened(0.4)
 	
 	detection.monitoring = unit_type == colors.TYPE.PLAYER
 
@@ -330,12 +334,17 @@ func _on_under_attack_timer_timeout():
 func take_damage(damage, from_type, aggressor):
 	aggressor_pos = aggressor.global_position
 	is_under_attack = true
+	emit_damage_particles(aggressor.global_position)
 	under_attack_timer.start(attack_memory)
 
 	hp -= damage
 	if hp <= 0:
 		return defect_or_die(from_type)
 	return false
+
+func emit_damage_particles(from_pos):
+	damage_particles.rotation = get_angle_to(from_pos) - PI
+	damage_particles.emitting = true
 
 func clear_attacker():
 	is_under_attack = false

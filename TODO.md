@@ -1,9 +1,7 @@
 # TODOs
 
 Next:
-- Bloom effect
 - Death animation
-- Attack particle effect
 - Base capture "swoosh" effect
 - Base capture sound effect
 - Background space particles
@@ -85,3 +83,5 @@ Extras:
 - Base capture color animation
 - Create itch.io page
 - Buildup-guage based way of base takeover?
+- Bloom effect
+- Attack particle effect
