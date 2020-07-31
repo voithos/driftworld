@@ -78,11 +78,14 @@ const SPEED_ADJUST_TIME = 0.5
 
 const ARRIVAL_DIST_SQUARED = 15
 
+const DEATH_ANIM_TIME = 0.4
+
 onready var steering = $steering
 onready var detection = $detection
 onready var attack_range = $attack_range
 onready var sprite = $sprite
 onready var damage_particles = $damage_particles
+onready var death_particles = $death_particles
 
 var current_motion = Vector2()
 var current_target = Vector2()
@@ -96,6 +99,8 @@ func _ready():
 	$laser.hide()
 	damage_particles.emitting = false
 	damage_particles.one_shot = true
+	death_particles.emitting = false
+	death_particles.one_shot = true
 	add_to_group("units")
 	become_type(unit_type)
 	if unit_type == colors.TYPE.NEUTRAL:
@@ -119,6 +124,8 @@ const MAX_REPEL_COUNT = 10
 
 func _process(delta):
 	update_laser()
+	if not is_alive:
+		return
 	update_morale_color()
 	check_hotkeys()
 
@@ -127,6 +134,10 @@ func check_hotkeys():
 		go_idle()
 
 func _physics_process(delta):
+	if not is_alive:
+		apply_steer()
+		return
+
 	check_arrival()
 	
 	if state == STATE.IDLE:
@@ -215,6 +226,7 @@ func become_type(new_type):
 	sprite.modulate = colors.COLORS[unit_type]
 	$laser.modulate = colors.COLORS[unit_type].lightened(0.4)
 	damage_particles.modulate = colors.COLORS[unit_type].lightened(0.4)
+	death_particles.modulate = colors.COLORS[unit_type].lightened(0.4)
 	
 	detection.monitoring = unit_type == colors.TYPE.PLAYER
 
@@ -361,6 +373,14 @@ func defect_or_die(from_type):
 
 func die():
 	is_alive = false
-	# TODO: Should there be some form of hitstun?
-	yield(get_tree(), "idle_frame")
+	death_particles.emitting = true
+	
+	set_speed(0)
+	set_selected(false)
+	
+	var death_tween = Tween.new()
+	add_child(death_tween)
+	death_tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0), DEATH_ANIM_TIME, Tween.TRANS_SINE)
+	death_tween.start()
+	yield(death_tween, "tween_completed")
 	queue_free()
