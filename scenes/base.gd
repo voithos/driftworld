@@ -190,6 +190,7 @@ func take_damage(damage, from_type, aggressor):
 	if unit_type == colors.TYPE.NEUTRAL and hp >= takeover_buildup:
 		# Get taken over
 		hp = starting_hp
+		$shockwave.shockwave()
 		takeover(buildup_type)
 		buildup_type = null
 		adjust_hp(0) # To fix the healthbar

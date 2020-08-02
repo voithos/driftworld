@@ -1,18 +1,21 @@
 # TODOs
 
 Next:
-- Base capture "swoosh" effect
 - Base capture sound effect
 - Background space particles
 - More interesting morale effects
   - "Poisonous units"?
 - Collision avoidance
 - Camera edge scrolling
+- Camera shake
+- Base damage animation
 - Max units (based on # of total bases, I guess)
-- Spawn animation
+- Spawn animation?
 - Performance improvements
 - Save data + level selector?
 - More levels / playtest / balance
+- More story
+- Glitch effect on intro
 
 Cutting block:
 - Fear system / fleeing?
@@ -85,3 +88,4 @@ Extras:
 - Bloom effect
 - Attack particle effect
 - Death animation
+- Base capture "swoosh" effect
