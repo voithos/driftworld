@@ -78,7 +78,8 @@ const SPEED_ADJUST_TIME = 0.5
 
 const ARRIVAL_DIST_SQUARED = 15
 
-const DEATH_ANIM_TIME = 0.4
+const DEATH_ANIM_TIME = 0.3
+const DEATH_COMPLETION_TIME = 0.4
 
 onready var steering = $steering
 onready var detection = $detection
@@ -382,5 +383,9 @@ func die():
 	add_child(death_tween)
 	death_tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0), DEATH_ANIM_TIME, Tween.TRANS_SINE)
 	death_tween.start()
-	yield(death_tween, "tween_completed")
+	
+	var death_timer = Timer.new()
+	add_child(death_timer)
+	death_timer.start(DEATH_COMPLETION_TIME)
+	yield(death_timer, "timeout")
 	queue_free()
