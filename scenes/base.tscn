@@ -60,7 +60,7 @@ __meta__ = {
 [node name="shockwave" parent="." instance=ExtResource( 7 )]
 z_index = 5
 z_as_relative = false
-speed = 0.25
+speed = 0.5
 acceleration = 3.0
 max_size = 15.0
 strength = 0.15

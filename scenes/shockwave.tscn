@@ -1,14 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/shockwave.shader" type="Shader" id=1]
-[ext_resource path="res://assets/shockwave.png" type="Texture" id=2]
 [ext_resource path="res://assets/shockwave_radial.png" type="Texture" id=3]
 [ext_resource path="res://scenes/shockwave.gd" type="Script" id=4]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 1 )
 shader_param/strength = 0.441
-shader_param/mask = ExtResource( 2 )
+shader_param/mask = ExtResource( 3 )
 
 [node name="shockwave" type="Sprite"]
 material = SubResource( 2 )
