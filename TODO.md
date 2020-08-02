@@ -25,7 +25,6 @@ Cutting block:
 - Attack / death sound effects
 
 Bugs:
-- HP bar is sometimes below units
 
 Extras:
 - Towers
@@ -89,3 +88,4 @@ Extras:
 - Attack particle effect
 - Death animation
 - Base capture "swoosh" effect
+- HP bar is sometimes below units
