@@ -6,6 +6,8 @@ export var zoomspeed = 10
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 3
 const ZOOM_CHANGE = 0.1
+const MOVE_MARGIN_X = 150.0
+const MOVE_MARGIN_Y = 100.0
 
 var curzoom = 1.0
 
@@ -20,8 +22,16 @@ func set_boundary(topleft, size):
 	boundary_size = size
 
 func _process(delta):
-	var horizontal = (int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")))
-	var vertical = (int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
+	var mouse_pos = get_viewport().get_mouse_position()
+	var viewport_size = get_viewport().size
+	var horizontal = (
+		int(Input.is_action_pressed("ui_right") || mouse_pos[0] > viewport_size[0] - MOVE_MARGIN_X)
+	    - int(Input.is_action_pressed("ui_left") || mouse_pos[0] < MOVE_MARGIN_X)
+	)
+	var vertical = (
+		int(Input.is_action_pressed("ui_down") || mouse_pos[1] > viewport_size[1] - MOVE_MARGIN_Y)
+		- int(Input.is_action_pressed("ui_up") || mouse_pos[1] < MOVE_MARGIN_Y)
+	)
 	position.x = lerp(position.x, position.x + horizontal * speed * curzoom, speed * delta)
 	position.y = lerp(position.y, position.y + vertical * speed * curzoom, speed * delta)
 	

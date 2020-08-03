@@ -5,7 +5,6 @@ Next:
 - More interesting morale effects
   - "Poisonous units"?
 - Collision avoidance
-- Camera edge scrolling
 - Camera shake
 - Base damage animation
 - Max units (based on # of total bases, I guess)
@@ -89,3 +88,4 @@ Extras:
 - Base capture "swoosh" effect
 - HP bar is sometimes below units
 - Base capture sound effect
+- Camera edge scrolling
