@@ -8,3 +8,4 @@
   License: http://creativecommons.org/licenses/by/4.0/
   ```
 - Base capture sound effect made by bareform, from https://freesound.org/people/bareform/sounds/218721/
+- Glitch effect based on RGB Shift Glitch by Eethe, from https://www.shadertoy.com/view/4t23Rc

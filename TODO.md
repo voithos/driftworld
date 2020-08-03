@@ -13,7 +13,6 @@ Next:
 - Save data + level selector?
 - More levels / playtest / balance
 - More story
-- Glitch effect on intro
 
 Cutting block:
 - Fear system / fleeing?
@@ -89,3 +88,4 @@ Extras:
 - HP bar is sometimes below units
 - Base capture sound effect
 - Camera edge scrolling
+- Glitch effect on intro

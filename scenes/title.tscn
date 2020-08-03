@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/title.gd" type="Script" id=1]
 [ext_resource path="res://scenes/transition.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/glitch.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/virgo.ttf"
@@ -33,6 +34,8 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="glitch" parent="canvas" instance=ExtResource( 3 )]
 
 [node name="click" type="Label" parent="canvas"]
 anchor_left = 0.5
