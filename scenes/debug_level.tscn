@@ -30,7 +30,6 @@ spawn_secs = 4.0
 [node name="base2" parent="level" instance=ExtResource( 3 )]
 position = Vector2( 175.578, -441.924 )
 unit_type = 1
-starting_units = 25
 
 [node name="ai" parent="level" instance=ExtResource( 2 )]
 

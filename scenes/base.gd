@@ -63,6 +63,9 @@ var ai_staging_time_left = 0
 const SPRITE_ANIM_TIME = 1.0
 const unit_scene = preload("res://scenes/unit.tscn")
 
+const AUDIO_BASE_DB = 10.0
+const AUDIO_ZOOM_FACTOR = 5.0
+
 func _ready():
 	randomize()
 	$selection.hide()
@@ -190,7 +193,7 @@ func take_damage(damage, from_type, aggressor):
 	if unit_type == colors.TYPE.NEUTRAL and hp >= takeover_buildup:
 		# Get taken over
 		hp = starting_hp
-		$shockwave.shockwave()
+		shockwave()
 		takeover(buildup_type)
 		buildup_type = null
 		adjust_hp(0) # To fix the healthbar
@@ -246,3 +249,10 @@ func become_type(new_type):
 	unit_type = new_type
 	add_to_group("bases_" + str(unit_type))
 	target_color = colors.COLORS[unit_type].darkened(0.15)
+
+func shockwave():
+	$shockwave.shockwave()
+	var camera = get_tree().get_nodes_in_group("camera")[0]
+	var volume = AUDIO_BASE_DB - camera.curzoom * AUDIO_ZOOM_FACTOR
+	$audioplayer.volume_db = volume
+	$audioplayer.play()

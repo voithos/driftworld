@@ -7,3 +7,4 @@
   Link: https://incompetech.filmmusic.io/song/5009-the-lift
   License: http://creativecommons.org/licenses/by/4.0/
   ```
+- Base capture sound effect made by bareform, from https://freesound.org/people/bareform/sounds/218721/

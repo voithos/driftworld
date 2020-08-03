@@ -1,7 +1,6 @@
 # TODOs
 
 Next:
-- Base capture sound effect
 - Background space particles
 - More interesting morale effects
   - "Poisonous units"?
@@ -89,3 +88,4 @@ Extras:
 - Death animation
 - Base capture "swoosh" effect
 - HP bar is sometimes below units
+- Base capture sound effect

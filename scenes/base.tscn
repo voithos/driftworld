@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/base.png" type="Texture" id=1]
 [ext_resource path="res://scenes/base.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/base_selection.png" type="Texture" id=5]
 [ext_resource path="res://scripts/entity_steering.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/shockwave.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/capture.wav" type="AudioStream" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 115.0
@@ -64,4 +65,7 @@ speed = 0.5
 acceleration = 3.0
 max_size = 15.0
 strength = 0.15
+
+[node name="audioplayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
 [connection signal="input_event" from="." to="." method="_on_base_input_event"]
