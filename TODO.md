@@ -1,12 +1,10 @@
 # TODOs
 
 Next:
-- Background space particles
 - More interesting morale effects
   - "Poisonous units"?
 - Collision avoidance
-- Camera shake
-- Base damage animation
+- Camera shake?
 - Max units (based on # of total bases, I guess)
 - Spawn animation?
 - Performance improvements
@@ -20,10 +18,7 @@ Cutting block:
 - Improved "arrival" logic
 - Scoring system? :O
 - Attack / death sound effects
-
-Bugs:
-
-Extras:
+- Background space particles
 - Towers
 - Tower capture
 - Tower attacks
@@ -89,3 +84,4 @@ Extras:
 - Base capture sound effect
 - Camera edge scrolling
 - Glitch effect on intro
+- Base damage animation

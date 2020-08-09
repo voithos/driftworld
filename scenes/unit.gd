@@ -317,6 +317,7 @@ func shoot_laser():
 	laser.show()
 	update_laser()
 	laser_timer.start()
+	emit_damage_particles()
 
 func update_laser():
 	if is_attacking:
@@ -328,6 +329,7 @@ func update_laser():
 		laser.look_at(attacking_unit.global_position)
 		var dist = global_position.distance_to(attacking_unit.global_position) - attacking_unit_radius
 		laser.region_rect.end.x = dist / laser.scale.x
+		update_damage_particles()
 
 func _on_laser_timer_timeout():
 	stop_attacking()
@@ -347,7 +349,6 @@ func _on_under_attack_timer_timeout():
 func take_damage(damage, from_type, aggressor):
 	aggressor_pos = aggressor.global_position
 	is_under_attack = true
-	emit_damage_particles(aggressor.global_position)
 	under_attack_timer.start(attack_memory)
 
 	hp -= damage
@@ -355,9 +356,13 @@ func take_damage(damage, from_type, aggressor):
 		return defect_or_die(from_type)
 	return false
 
-func emit_damage_particles(from_pos):
-	damage_particles.rotation = get_angle_to(from_pos) - PI
+func emit_damage_particles():
 	damage_particles.emitting = true
+	update_damage_particles()
+
+func update_damage_particles():
+	damage_particles.global_position = attacking_unit.global_position + (global_position - attacking_unit.global_position).normalized() * attacking_unit_radius
+	damage_particles.rotation = get_angle_to(attacking_unit.global_position) - PI
 
 func clear_attacker():
 	is_under_attack = false

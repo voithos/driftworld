@@ -4,7 +4,7 @@ Theme: Out of Control
 
 ## Brainstorm
 
-- Weapons constantly changing
+- weapons constantly changing
   - 2d beat em up
   - bullet hell? bullet type keeps changing
 
@@ -17,8 +17,8 @@ Theme: Out of Control
   - mutiny can spontaneously appear?
   - oh basically like a cancer simulation :|
 
-- [evangelion game] more damage you take, your "stability" decreases and 
-  - bad stuff?
+- [evangelion game] more damage you take, your "stability" decreases
+  - [bad stuff happens]?
   - you are controlling something, thing has will of its own
   - if healthy (or some other marker) you're in control
   - once you start losing it, the machine is harder to control
@@ -53,6 +53,6 @@ Open scale strategy game
 Goal: destroy enemy home base
 
 Units lose morale the further they are from a base
-Units lose morale the longer they have been alive
+Units lose morale the longer they have been alive?
 If morale goes to 0, units rebel (nearby units that have ~low morale also rebel)
 Start disobeying and attacking nearby units. If no nearby units, march toward nearest base to attack it

@@ -6,7 +6,7 @@ export var zoomspeed = 10
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 3
 const ZOOM_CHANGE = 0.1
-const MOVE_MARGIN_X = 150.0
+const MOVE_MARGIN_X = 120.0
 const MOVE_MARGIN_Y = 100.0
 
 var curzoom = 1.0

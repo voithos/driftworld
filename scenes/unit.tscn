@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/unit.png" type="Texture" id=1]
 [ext_resource path="res://scenes/unit.gd" type="Script" id=2]
@@ -29,18 +29,24 @@ orbit_velocity_random = 0.0
 radial_accel = 0.62
 angle = 720.0
 angle_random = 1.0
-scale = 0.5
+scale = 0.25
 color_ramp = SubResource( 2 )
 
-[sub_resource type="CurveTexture" id=10]
-
 [sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 0.734091 ), 0.0, 1.13712, 0, 0, Vector2( 1, 0.206818 ), -0.895268, 0.0, 0, 0 ]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0.734091 ), 0.0, 1.13712, 0, 0, Vector2( 1, 0.206818 ), -0.895268, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
 lifetime_randomness = 0.5
 emission_shape = 1
 emission_sphere_radius = 3.0
@@ -51,17 +57,17 @@ gravity = Vector3( 0, 0, 0 )
 initial_velocity = 150.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-angle_curve = SubResource( 10 )
-scale_curve = SubResource( 5 )
+angle_curve = SubResource( 5 )
+scale_curve = SubResource( 7 )
 color_ramp = SubResource( 2 )
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=9]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=10]
 radius = 200.0
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=11]
 radius = 100.0
 
 [node name="unit" type="KinematicBody2D"]
@@ -86,23 +92,24 @@ scale = Vector2( 0.22, 0.22 )
 texture = ExtResource( 3 )
 
 [node name="damage_particles" type="Particles2D" parent="."]
-amount = 4
+amount = 5
 lifetime = 0.2
-explosiveness = 1.0
+explosiveness = 0.1
 local_coords = false
 process_material = SubResource( 3 )
 texture = ExtResource( 7 )
 
 [node name="death_particles" type="Particles2D" parent="."]
+visible = false
 amount = 10
 lifetime = 0.3
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 6 )
+process_material = SubResource( 8 )
 texture = ExtResource( 6 )
 
 [node name="shape" type="CollisionShape2D" parent="."]
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 
 [node name="steering" parent="." instance=ExtResource( 4 )]
 
@@ -113,7 +120,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="detection_shape" type="CollisionShape2D" parent="detection"]
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 
 [node name="attack_range" type="Area2D" parent="."]
 input_pickable = false
@@ -122,5 +129,5 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="attack_range_shape" type="CollisionShape2D" parent="attack_range"]
-shape = SubResource( 9 )
+shape = SubResource( 11 )
 [connection signal="input_event" from="." to="." method="_on_unit_input_event"]
