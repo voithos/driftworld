@@ -9,13 +9,27 @@ const ZOOM_CHANGE = 0.1
 const MOVE_MARGIN_X = 120.0
 const MOVE_MARGIN_Y = 100.0
 
-var curzoom = 1.0
+var curzoom = MAX_ZOOM
 
 var boundary_topleft = Vector2()
 var boundary_size = Vector2()
 
+const INITIAL_ZOOM_TIME = 2.5
+var is_initial_zoom = true
+
 func _ready():
 	add_to_group("camera")
+	yield(get_tree().create_timer(0.8), "timeout")
+	initial_zoom()
+
+func initial_zoom():
+	is_initial_zoom = true
+	var tween = Tween.new()
+	add_child(tween)
+	tween.interpolate_property(self, "curzoom", curzoom, 1.0, INITIAL_ZOOM_TIME, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	tween.start()
+	yield(tween, "tween_completed")
+	is_initial_zoom = false
 
 func set_boundary(topleft, size):
 	boundary_topleft = topleft
@@ -24,16 +38,18 @@ func set_boundary(topleft, size):
 func _process(delta):
 	var mouse_pos = get_viewport().get_mouse_position()
 	var viewport_size = get_viewport().size
-	var horizontal = (
-		int(Input.is_action_pressed("ui_right") || mouse_pos[0] > viewport_size[0] - MOVE_MARGIN_X)
-	    - int(Input.is_action_pressed("ui_left") || mouse_pos[0] < MOVE_MARGIN_X)
-	)
-	var vertical = (
-		int(Input.is_action_pressed("ui_down") || mouse_pos[1] > viewport_size[1] - MOVE_MARGIN_Y)
-		- int(Input.is_action_pressed("ui_up") || mouse_pos[1] < MOVE_MARGIN_Y)
-	)
-	position.x = lerp(position.x, position.x + horizontal * speed * curzoom, speed * delta)
-	position.y = lerp(position.y, position.y + vertical * speed * curzoom, speed * delta)
+
+	if not is_initial_zoom:
+		var horizontal = (
+			int(Input.is_action_pressed("ui_right") || mouse_pos[0] > viewport_size[0] - MOVE_MARGIN_X)
+		    - int(Input.is_action_pressed("ui_left") || mouse_pos[0] < MOVE_MARGIN_X)
+		)
+		var vertical = (
+			int(Input.is_action_pressed("ui_down") || mouse_pos[1] > viewport_size[1] - MOVE_MARGIN_Y)
+			- int(Input.is_action_pressed("ui_up") || mouse_pos[1] < MOVE_MARGIN_Y)
+		)
+		position.x = lerp(position.x, position.x + horizontal * speed * curzoom, speed * delta)
+		position.y = lerp(position.y, position.y + vertical * speed * curzoom, speed * delta)
 	
 	position.x = clamp(position.x, boundary_topleft.x, boundary_topleft.x + boundary_size.x)
 	position.y = clamp(position.y, boundary_topleft.y, boundary_topleft.y + boundary_size.y)

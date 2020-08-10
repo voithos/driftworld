@@ -1,9 +1,6 @@
 # TODOs
 
 Next:
-- More interesting morale effects
-  - "Poisonous units"?
-- Max units (based on # of total bases, I guess)
 - Save data + level selector?
 - More levels / playtest / balance
 - More story
@@ -22,6 +19,8 @@ Cutting block:
 - More unit / base types!
 - Walls?
 - Collision avoidance
+- More interesting morale effects
+  - "Poisonous units"?
 
 ## Done
 
@@ -85,3 +84,4 @@ Cutting block:
 - Camera shake?
 - Spawn animation?
 - Performance improvements
+- Max units (based on # of total bases, I guess)
