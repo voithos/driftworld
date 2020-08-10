@@ -84,6 +84,7 @@ const DEATH_COMPLETION_TIME = 0.4
 onready var steering = $steering
 onready var detection = $detection
 onready var attack_range = $attack_range
+onready var bump = $bump
 onready var sprite = $sprite
 onready var damage_particles = $damage_particles
 onready var death_particles = $death_particles
@@ -144,24 +145,29 @@ func check_hotkeys():
 	if selected and Input.is_action_just_pressed("ui_cancel"):
 		go_idle()
 
+var delta_since_tick = 0.0
+const PHYSICS_TICK = 0.2
 func _physics_process(delta):
 	if not is_alive:
 		apply_steer()
 		return
 
+	# These always occur.
 	check_arrival()
-	
 	if state == STATE.IDLE:
 		steering.wander(0.5)
 	elif state == STATE.MOVE:
 		steering.arrive(current_target)
 		steering.wander(0.05)
+	
+	delta_since_tick += delta
+	if delta_since_tick >= PHYSICS_TICK:
+		
+		attack_enemies(attack_range.get_overlapping_bodies())
+		update_morale(PHYSICS_TICK)
+		delta_since_tick = 0.0
 
-	var other_units = attack_range.get_overlapping_bodies()
-	maintain_distance(other_units)
-	attack_enemies(other_units)
-	update_morale(delta)
-
+	maintain_distance(bump.get_overlapping_bodies())
 	apply_steer()
 
 func set_speed(target_speed):
@@ -242,16 +248,15 @@ func become_type(new_type):
 	detection.monitoring = unit_type == colors.TYPE.PLAYER
 
 func maintain_distance(other_units):
+	if not other_units:
+		return
 	# Maintain distance from other units.
 	# Keep a count so as to not go overboard and slow down the game.
-	var count = 0
-	for unit in other_units:
+	for i in range(MAX_REPEL_COUNT):
+		var unit = other_units[randi() % other_units.size()]
 		if unit == self:
 			continue
 		steering.repel(unit.global_position, 1)
-		count += 1
-		#if count > MAX_REPEL_COUNT:
-		#	break
 
 func apply_steer():
 	var motion = steering.steer()
