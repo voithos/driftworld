@@ -4,7 +4,6 @@ Next:
 - More interesting morale effects
   - "Poisonous units"?
 - Max units (based on # of total bases, I guess)
-- Performance improvements
 - Save data + level selector?
 - More levels / playtest / balance
 - More story
@@ -85,3 +84,4 @@ Cutting block:
 - Base damage animation
 - Camera shake?
 - Spawn animation?
+- Performance improvements

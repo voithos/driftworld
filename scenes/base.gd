@@ -157,7 +157,12 @@ func regen():
 	var amt = -regen_amt if unit_type == colors.TYPE.NEUTRAL else regen_amt
 	adjust_hp(amt)
 
+const MAX_UNITS_PER_COLOR = 100
+
 func spawn_unit():
+	if len(get_tree().get_nodes_in_group("units_" + str(unit_type))) >= MAX_UNITS_PER_COLOR:
+		return
+
 	var unit = unit_scene.instance()
 	unit.global_position = generate_spawn_position()
 	unit.unit_type = unit_type
