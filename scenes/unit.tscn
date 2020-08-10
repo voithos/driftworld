@@ -100,7 +100,6 @@ process_material = SubResource( 3 )
 texture = ExtResource( 7 )
 
 [node name="death_particles" type="Particles2D" parent="."]
-visible = false
 amount = 10
 lifetime = 0.3
 explosiveness = 1.0

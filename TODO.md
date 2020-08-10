@@ -3,8 +3,6 @@
 Next:
 - More interesting morale effects
   - "Poisonous units"?
-- Collision avoidance
-- Camera shake?
 - Max units (based on # of total bases, I guess)
 - Spawn animation?
 - Performance improvements
@@ -25,6 +23,7 @@ Cutting block:
   - AOE?
 - More unit / base types!
 - Walls?
+- Collision avoidance
 
 ## Done
 
@@ -85,3 +84,4 @@ Cutting block:
 - Camera edge scrolling
 - Glitch effect on intro
 - Base damage animation
+- Camera shake?

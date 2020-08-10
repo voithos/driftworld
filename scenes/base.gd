@@ -112,6 +112,8 @@ func apply_steer(delta):
 	move_and_collide(motion * delta)
 
 func check_hotkeys():
+	if Input.is_action_just_pressed("ui_end"):
+		shockwave()
 	if selected and Input.is_action_just_pressed("ui_cancel"):
 		go_idle()
 
@@ -250,9 +252,14 @@ func become_type(new_type):
 	add_to_group("bases_" + str(unit_type))
 	target_color = colors.COLORS[unit_type].darkened(0.15)
 
+const CAMERA_SHAKE_DURATION = 1.2
+const CAMERA_SHAKE_FREQUENCY = 30
+const CAMERA_SHAKE_AMPLITUDE_FACTOR = 10
+
 func shockwave():
 	$shockwave.shockwave()
 	var camera = get_tree().get_nodes_in_group("camera")[0]
+	camera.shake(CAMERA_SHAKE_DURATION, CAMERA_SHAKE_FREQUENCY, CAMERA_SHAKE_AMPLITUDE_FACTOR / camera.curzoom)
 	var volume = AUDIO_BASE_DB - camera.curzoom * AUDIO_ZOOM_FACTOR
 	$audioplayer.volume_db = volume
 	$audioplayer.play()
