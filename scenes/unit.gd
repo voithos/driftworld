@@ -111,8 +111,10 @@ func _ready():
 		
 	var from = Color(sprite.modulate.r, sprite.modulate.g, sprite.modulate.b, 0)
 	tween.interpolate_property(sprite, "modulate", from, sprite.modulate, LIFEDEATH_ANIM_TIME, Tween.TRANS_SINE)
+	tween.interpolate_property($selection, "modulate", Color(1, 1, 1, 0), $selection.modulate, LIFEDEATH_ANIM_TIME, Tween.TRANS_SINE)
 	tween.start()
 	sprite.modulate = from
+	$selection.modulate = Color(1, 1, 1, 0)
 	
 	add_child(attack_timer)
 	attack_timer.connect("timeout", self, "_on_attack_timer_timeout")
