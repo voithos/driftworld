@@ -78,7 +78,7 @@ const SPEED_ADJUST_TIME = 0.5
 
 const ARRIVAL_DIST_SQUARED = 15
 
-const DEATH_ANIM_TIME = 0.3
+const LIFEDEATH_ANIM_TIME = 0.3
 const DEATH_COMPLETION_TIME = 0.4
 
 onready var steering = $steering
@@ -93,9 +93,11 @@ var current_target = Vector2()
 
 onready var laser = $laser
 onready var tween = Tween.new()
+onready var speed_tween = Tween.new()
 
 func _ready():
 	add_child(tween)
+	add_child(speed_tween)
 	$selection.hide()
 	$laser.hide()
 	damage_particles.emitting = false
@@ -106,6 +108,11 @@ func _ready():
 	become_type(unit_type)
 	if unit_type == colors.TYPE.NEUTRAL:
 		morale = NEUTRAL_START_MORALE
+		
+	var from = Color(sprite.modulate.r, sprite.modulate.g, sprite.modulate.b, 0)
+	tween.interpolate_property(sprite, "modulate", from, sprite.modulate, LIFEDEATH_ANIM_TIME, Tween.TRANS_SINE)
+	tween.start()
+	sprite.modulate = from
 	
 	add_child(attack_timer)
 	attack_timer.connect("timeout", self, "_on_attack_timer_timeout")
@@ -120,6 +127,7 @@ func _ready():
 	add_child(under_attack_timer)
 	under_attack_timer.connect("timeout", self, "_on_under_attack_timer_timeout")
 	under_attack_timer.set_one_shot(true)
+
 
 const MAX_REPEL_COUNT = 10
 
@@ -155,9 +163,9 @@ func _physics_process(delta):
 	apply_steer()
 
 func set_speed(target_speed):
-	tween.stop_all()
-	tween.interpolate_property(self, "SPEED", SPEED, target_speed, SPEED_ADJUST_TIME)
-	tween.start()
+	speed_tween.stop_all()
+	speed_tween.interpolate_property(self, "SPEED", SPEED, target_speed, SPEED_ADJUST_TIME)
+	speed_tween.start()
 
 func update_morale(delta):
 	if unit_type != colors.TYPE.PLAYER:
@@ -282,7 +290,7 @@ func go_idle():
 	current_target = null
 
 func update_morale_color():
-	if unit_type != colors.TYPE.PLAYER:
+	if unit_type != colors.TYPE.PLAYER or tween.is_active():
 		return
 	sprite.modulate =  colors.COLORS[unit_type].linear_interpolate(
 		colors.COLORS[colors.TYPE.DEFECTOR], 1.0 - morale / MAX_MORALE * 2)
@@ -384,10 +392,8 @@ func die():
 	set_speed(0)
 	set_selected(false)
 	
-	var death_tween = Tween.new()
-	add_child(death_tween)
-	death_tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0), DEATH_ANIM_TIME, Tween.TRANS_SINE)
-	death_tween.start()
+	tween.interpolate_property(sprite, "modulate", sprite.modulate, Color(1, 1, 1, 0), LIFEDEATH_ANIM_TIME, Tween.TRANS_SINE)
+	tween.start()
 	
 	var death_timer = Timer.new()
 	add_child(death_timer)
