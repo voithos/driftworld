@@ -113,7 +113,7 @@ func apply_steer(delta):
 
 func check_hotkeys():
 	if Input.is_action_just_pressed("ui_end"):
-		shockwave()
+		pass # Debug line
 	if selected and Input.is_action_just_pressed("ui_cancel"):
 		go_idle()
 
@@ -190,6 +190,8 @@ func take_damage(damage, from_type, aggressor):
 		# Switch to buildup
 		hp = -hp
 		buildup_type = from_type
+		if unit_type != colors.TYPE.NEUTRAL:
+			shockwave()
 		takeover(colors.TYPE.NEUTRAL)
 		adjust_hp(0) # To fix the healthbar
 	if unit_type == colors.TYPE.NEUTRAL and hp >= takeover_buildup:
