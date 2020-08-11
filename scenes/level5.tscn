@@ -19,20 +19,28 @@ unit_type = 0
 starting_units = 15
 
 [node name="base2" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 1319.93, -1.68188 )
+position = Vector2( 1319.93, 668.274 )
 unit_type = 3
 spawn_secs = 4.0
+starting_units = 10
 
 [node name="base5" parent="level" instance=ExtResource( 3 )]
-position = Vector2( -1180.4, 6.7937 )
+position = Vector2( -1180.4, 655.368 )
 unit_type = 3
 spawn_secs = 4.0
+starting_units = 10
 
 [node name="base3" parent="level" instance=ExtResource( 3 )]
-position = Vector2( 1.96057, -989.1 )
+position = Vector2( 1300.66, 13.1385 )
+starting_units = 25
 
 [node name="base4" parent="level" instance=ExtResource( 3 )]
-position = Vector2( -6.51526, 1134.06 )
+position = Vector2( -1182.5, -13.4175 )
+starting_units = 25
+
+[node name="base7" parent="level" instance=ExtResource( 3 )]
+position = Vector2( -6.5155, -768.9 )
+starting_units = 20
 
 [node name="ai" parent="level" instance=ExtResource( 4 )]
 

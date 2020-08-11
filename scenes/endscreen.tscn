@@ -44,7 +44,7 @@ margin_top = -316.0
 margin_right = 512.0
 margin_bottom = 316.0
 custom_fonts/font = SubResource( 2 )
-text = "you are
+text = "you are alone,
 surrounded by
 silence"
 align = 1

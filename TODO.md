@@ -1,10 +1,5 @@
 # TODOs
 
-Next:
-- Save data + level selector?
-- More levels / playtest / balance
-- More story
-
 Cutting block:
 - Fear system / fleeing?
 - UI for Unit / base counts for each player
@@ -21,6 +16,7 @@ Cutting block:
 - Collision avoidance
 - More interesting morale effects
   - "Poisonous units"?
+- Save data + level selector?
 
 ## Done
 
