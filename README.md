@@ -1,6 +1,6 @@
 # DRIFTWORLD
 
-![DRIFTWORLD](https://raw/github.com/voithos/driftworld/master/driftworld.png)
+![DRIFTWORLD](https://raw.github.com/voithos/driftworld/master/driftworld.png)
 
 DRIFTWORLD is a 2D real time strategy game about patience, conquest, and control.
 
