@@ -17,10 +17,11 @@ func _ready():
 		OS.window_size = size
 
 func _input(event):
+	if event is InputEventKey and event.is_pressed():
+		if event.scancode == KEY_ESCAPE:
+			get_tree().quit()
 	if OS.is_debug_build():
 		if event is InputEventKey and event.is_pressed():
-			if event.scancode == KEY_ESCAPE:
-				get_tree().quit()
 			if event.scancode == KEY_SPACE:
 				is_paused = not is_paused
 				get_tree().set_pause(is_paused)
